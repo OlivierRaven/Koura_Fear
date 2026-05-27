@@ -1,0 +1,7 @@
+"term","Estimate","Std. Error","z value","Pr(>|z|)"
+"(Intercept)",-0.068,0.3,-0.228,0.82
+"treatmentcatfish",0.469,0.3,1.564,0.118
+"treatmenteel",-0.416,0.298,-1.397,0.162
+"lightdark",-0.668,0.24,-2.784,0.005
+"periodduring",0.528,0.282,1.871,0.061
+"periodafter",0.906,0.301,3.012,0.003

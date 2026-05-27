@@ -222,13 +222,15 @@ refuge_plot <- prop_location_time %>%
   geom_line(linewidth = 1) +
   geom_vline(xintercept = c(60, 240), linetype = "dashed") +
   geom_vline(xintercept = c(0, 5, 10, 20, 30, 45, 60, 61, 65, 70, 80, 90, 120, 150, 210, 240, 245, 260, 275, 290, 300), alpha = .15) +
-  annotate("text", x = 30,  y = 1, label = "before", size = 3) +
-  annotate("text", x = 150, y = 1, label = "during", size = 3) +
-  annotate("text", x = 270, y = 1, label = "after",  size = 3) +
-  scale_colour_manual(values = c("catfish" = "grey20",  "eel"  = "grey40",  "control" = "grey60")) +
-  scale_linetype_manual(values = c("solid", "dashed", "dotdash")) +
-  facet_grid(light ~ ., scales = "free_x") +
-  labs(x = "time (minutes)", y = "proportion in refuge", colour = "treatment", linetype = "treatment")
+  annotate("text", x = 30,  y = 1, label = "Before", size = 3) +
+  annotate("text", x = 150, y = 1, label = "During", size = 3) +
+  annotate("text", x = 270, y = 1, label = "After",  size = 3) +
+  scale_colour_manual(values = c("catfish" = "grey20",  "eel"  = "grey40",  "control" = "grey60"),
+                      labels = c("catfish" = "Catfish", "eel" = "Eel", "control" = "Control")) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotdash"),
+                        labels = c("catfish" = "Catfish", "eel" = "Eel", "control" = "Control")) +
+  facet_grid(light ~ ., scales = "free_x", labeller = as_labeller(str_to_title)) +
+  labs(x = "Time (minutes)", y = "Proportion in refuge", colour = "Treatment", linetype = "Treatment")
 
 ggsave(file.path(out_dir, "fig-3-refuge-plot.png"), refuge_plot, width = 8, height = 5, dpi = 300)
 
@@ -367,12 +369,12 @@ cld_all <- bind_rows(cld_treatment, cld_light, cld_period) %>%
 
 # extract specific p-values for inline reporting
 p_catfish_eel     <- emmeans_bb %>% filter(contrast == "catfish / eel")     %>% pull(p.value)
-p_catfish_control <- emmeans_bb %>% filter(contrast == "catfish / control") %>% pull(p.value)
+p_catfish_control <- emmeans_bb %>% filter(contrast == "control / catfish") %>% pull(p.value)
 p_control_eel     <- emmeans_bb %>% filter(contrast == "control / eel")     %>% pull(p.value)
 p_before_after    <- emmeans_bb %>% filter(contrast == "before / after")    %>% pull(p.value)
 p_before_during   <- emmeans_bb %>% filter(contrast == "before / during")   %>% pull(p.value)
 p_during_after    <- emmeans_bb %>% filter(contrast == "during / after")    %>% pull(p.value)
-p_dark_light      <- emmeans_bb %>% filter(contrast == "dark / light")      %>% pull(p.value)
+p_dark_light      <- emmeans_bb %>% filter(contrast == "light / dark")      %>% pull(p.value)
 
 write.csv(emmeans_bb,  file.path(out_dir, "tbl-2-emmeans.csv"), row.names = FALSE)
 
@@ -394,7 +396,6 @@ emm_treat_pred  <- as.data.frame(emmeans(m_final, ~ treatment, type = "response"
 emm_light_pred  <- as.data.frame(emmeans(m_final, ~ light,     type = "response"))
 emm_period_pred <- as.data.frame(emmeans(m_final, ~ period,    type = "response"))
 
-
 # add factor label and rename x variable
 emm_treat_pred  <- emm_treat_pred  %>% mutate(factor = "treatment", x = treatment)
 emm_light_pred  <- emm_light_pred  %>% mutate(factor = "light",     x = light)
@@ -409,14 +410,35 @@ emmeans_plot <- ggplot(emm_all, aes(x = x, y = prob, ymin = asymp.LCL, ymax = as
   geom_point(size = 3) +
   geom_errorbar(width = 0.2) +
   geom_text(data = cld_all, aes(x = x, y = asymp.UCL + 0.05, label = .group), inherit.aes = FALSE) +
-  facet_wrap(~ factor, scales = "free_x") +
-  scale_y_continuous("predicted probability of refuge use", limits = c(0, 1)) +
-  scale_x_discrete(NULL) +
+  facet_wrap(~ factor, scales = "free_x", labeller = as_labeller(str_to_title)) +
+  scale_y_continuous("Predicted probability of refuge use", limits = c(0, 1)) +
+  scale_x_discrete(NULL, labels = str_to_title) +
   geom_hline(yintercept = 0.5, linetype = "dashed", colour = "grey50")
 
 ggsave(file.path(out_dir, "fig-2-emmeans-plot.png"), emmeans_plot, width = 5, height = 3, dpi = 300)
 
 emmeans_plot
+
+```
+
+```{r}
+#| label: fig-emmeans-treatment-plot
+#| include: true
+#| fig-width: 3
+#| fig-height: 3
+
+emm_treatment <- bind_rows(emm_treat_pred) %>%
+  mutate(factor = factor(factor, levels = c("treatment")), x = factor(x, levels = c("catfish", "eel", "control")))
+
+emmeans_treatment_plot <- ggplot(emm_treatment, aes(x = x, y = prob, ymin = asymp.LCL, ymax = asymp.UCL)) +
+  geom_point(size = 3) +
+  geom_errorbar(width = 0.2) +
+  geom_text(data = cld_treatment, aes(x = x, y = asymp.UCL + 0.05, label = .group), inherit.aes = FALSE) +
+  scale_y_continuous("Predicted probability of refuge use", limits = c(0, 1)) +
+  scale_x_discrete(NULL, labels = str_to_title) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", colour = "grey50")
+
+emmeans_treatment_plot
 
 ```
 
@@ -472,7 +494,7 @@ p_loc_time <- ggplot(koura_long_ref, aes(time, location, col = treatment)) +
   geom_line(aes(group = koura_id)) +
   geom_vline(xintercept = c(60, 240), linetype = "dashed") +
   facet_wrap(koura_id ~ light) +
-  labs(x = "time (min)", y = "location")+
+  labs(x = "Time (min)", y = "Location")+
   theme(legend.position = "none")
 
 p_beh_time <- ggplot(koura_behaviour_time, aes(time, behaviour, col = treatment)) +
@@ -480,7 +502,7 @@ p_beh_time <- ggplot(koura_behaviour_time, aes(time, behaviour, col = treatment)
   geom_line(aes(group = koura_id))+
   geom_vline(xintercept = c(60, 240), linetype = "dashed") +
   facet_wrap(koura_id ~ light) +
-  labs(x = "time (min)", y = "behaviour") 
+  labs(x = "Time (min)", y = "Behaviour")
 
 # --- Combine ---
 koura_time_plot <- p_loc_time + p_beh_time
@@ -523,6 +545,9 @@ spearman_control <- cor.test(cor_control$size_mm1, cor_control$prop_refuge,
 spearman_catfish
 spearman_eel
 spearman_control
+
+p_raw <- c(spearman_catfish$p.value, spearman_eel$p.value, spearman_control$p.value)
+p.adjust(p_raw, method = "bonferroni")
 
 # Optional quick scatter plots to visualise
 par(mfrow = c(1, 3))
@@ -587,45 +612,7 @@ cont_table <- time_compare %>%
 rownames(cont_table) <- c("time_5", "time_60")
 ```
 
-## Repeated measurements
-```{r}
-#| label: repeated-measurements
-#| include: false
-#| fig-width: 5
-#| fig-height: 5
-#| fig-cap: "your caption"
 
-repeated_ids <- unique(df_NCE_raw$koura_id[duplicated(df_NCE_raw$koura_id)])
-
-df_repeated <- koura_long_ref %>% 
-  filter(koura_id %in% repeated_ids) %>%
-  filter(!is.na(location), location != "") %>%
-  count(koura_id, treatment, exp_id, location = location, name = "n") %>%
-  group_by(koura_id, exp_id) %>%
-  mutate(prop = n / sum(n)) %>%
-  ungroup() %>%
-  mutate(treatment = factor(treatment, levels = c("catfish","eel","control")),
-    location  = factor(location,  levels = c("refuge","open")))
-
-# Collapse to one score per individual per trial - e.g. prop time refuge
-refuge_score <- df_repeated %>%
-  filter(location == "refuge") %>%
-  group_by(koura_id, exp_id, treatment) %>%
-  summarise(prop_refuge = mean(prop), .groups = "drop")
-
-plot_repeated_time <- 
-  koura_long_ref %>%
-  filter(koura_id %in% repeated_ids) %>%
-  mutate(treatment = factor(treatment, levels = c("catfish","eel","control")))%>%
-  ggplot(aes(x = time, y = location, col = treatment)) +
-  geom_point() +  
-  geom_line(aes(group = exp_id)) +
-  geom_vline(xintercept = c(60, 240), linetype = "dashed") +
-  facet_grid(koura_id  ~ date) +
-  labs(x = "time (min)", y = "location")
-
-plot_repeated_time
-```
 
 # Feeding experiment
 ## Feeding table
@@ -668,13 +655,14 @@ knitr::kable(feeding_summary, col.names = c("Treatment", "Days starved", "Mean (
 #| include: true
 #| fig-width: 5
 #| fig-height: 4
-#| fig-cap: "Mean kōura feeding rate (pellets consumed per gram body weight ± SE) across predator treatments (catfish, eel, control) and starvation periods (0, 3, and 4 days). Points represent treatment means and error bars show standard error."
+#| fig-cap: "Mean (±SE) kōura feeding rate (pellets consumed per gram wet weight kōura) across predator treatments (catfish, eel, control) and starvation periods (0, 3, and 4 days)."
 
 feeding_plot <- ggplot(df_feeding, aes(x = factor(day_starve),  y = pellets_per_g, fill = treatment)) +
   stat_summary(fun = mean, geom = "bar", position = position_dodge(0.9), colour = "black", linewidth = 0.4, pattern_fill = "black",pattern_colour = "black", pattern_density = 0.3, pattern_spacing = 0.05) +
   stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5,  position = position_dodge(0.9)) +
-  scale_fill_manual(values = c("catfish" = "gray20",  "eel"  = "grey40",  "control" = "grey60")) +
-  labs(x = "starvation period (days)",  y = "feeding rate (pellets consumed g WW⁻¹)",  fill = "treatment") +
+  scale_fill_manual(values = c("catfish" = "gray20",  "eel"  = "grey40",  "control" = "grey60"),
+                   labels = c("catfish" = "Catfish", "eel" = "Eel", "control" = "Control")) +
+  labs(x = "Starvation period (days)",  y = "Feeding rate (pellets consumed g WW⁻¹)",  fill = "Treatment") +
   theme(legend.position = "right")
 
 ggsave(file.path(out_dir, "fig-4-feeding-plot.png"), feeding_plot, width = 5, height = 4, dpi = 300)
@@ -795,7 +783,7 @@ as.data.frame(anova_feed) %>%
   knitr::kable(col.names = c("Term", "Sum Sq", "Df", "F value", "p value"))
 ```
 
-
+# Session info
 ```{r}
 #| label: session-info
 #| include: true

@@ -13,8 +13,9 @@
 *.zip
 *.txt
 *.r
-manuscript/
+
 GoPro/
+GoPro_analysis.qmd
 
 .RData
 .Rhistory
