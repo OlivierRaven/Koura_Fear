@@ -1,18 +1,6 @@
 ---
 title: "Fear of the invader: a predatory invader may provoke stronger non-consumptive effects on a keystone native prey than a native predator"
 
-format:
-  html:
-    theme: cosmo
-  pdf:
-    toc: true
-    number-sections: true
-    colorlinks: true
-    link-citations: true
-    includes:
-      in-header: references/header.tex
-  docx:
-    reference-doc: references/reference.docx
 execute:
   freeze: false
   cache: false
@@ -108,8 +96,12 @@ citation:
 #| label: start
 #| include: false
 
-# run analysis notebook to make all variables available
+# Change to chapter directory so relative paths in analysis.qmd resolve correctly
+# when this file is rendered as part of the thesis book from the root directory
+chapter_dir <- dirname(knitr::current_input(dir = TRUE))
+old_wd <- setwd(chapter_dir)
 knitr::knit("analysis.qmd", output = tempfile(), quiet = TRUE)
+setwd(old_wd)
 ```
 
 # Introduction
@@ -141,12 +133,12 @@ Experiments were conducted in glass tanks (320 × 170 × 170 mm), containing 5 L
 
 # Results
 ## Refuge experiment
-The proportion of time kōura spent in refuge varied across treatments, experimental periods, and light conditions (@fig-emmeans-plot). Stratified analyses revealed that treatment effects on refuge use differed between light and dark conditions. Under light conditions, there were no significant differences in refuge use among the three treatments (@tbl-emmeans-stratified). In contrast, under dark condition, kōura exposed to catfish used refuge significantly more than those exposed to eels (p = `r get_treat_contrast("Dark", "catfish / eel")`), with control treatment refuge use was intermediate (p = `r get_period_contrast("Dark", "control / catfish")` vs catfish, p = `r get_period_contrast("Dark", "control / eel")` vs eel). Regarding experimental periods, refuge use differed significantly between periods in light conditions, with lower refuge use before predator introduction compared to after predator removal (p = `r get_period_contrast("Light", "before / after")`). No significant period effects were observed in dark conditions. The combined model showed that light regime had a significant effect on refuge use (`r get_light_effect()`), with kōura using refuge more in light than in dark conditions across all treatments. Overall, under light conditions, the pattern of refuge use in the control treatment was more similar to the catfish treatment, whereas under dark conditions it more resembled the eel treatment (Fig. 3; Table S1). There was also no relationship between kōura OCL and refuge use in any of the three treatments (rs = `r get_ocl_corr("catfish")`, `r get_ocl_corr("eel")` and `r get_ocl_corr("control")` for catfish, eel and control treatments respectively, all NS).
+The proportion of time kōura spent in refuge varied across treatments, experimental periods, and light conditions (@fig-emmeans-stratified-ms). Stratified analyses revealed that treatment effects on refuge use differed between light and dark conditions. Under light conditions, there were no significant differences in refuge use among the three treatments (@tbl-emmeans-stratified). In contrast, under dark condition, kōura exposed to catfish used refuge significantly more than those exposed to eels (p = `r get_treat_contrast("Dark", "catfish / eel")`), with control treatment refuge use was intermediate (p = `r get_period_contrast("Dark", "control / catfish")` vs catfish, p = `r get_period_contrast("Dark", "control / eel")` vs eel). Regarding experimental periods, refuge use differed significantly between periods in light conditions, with lower refuge use before predator introduction compared to after predator removal (p = `r get_period_contrast("Light", "before / after")`). No significant period effects were observed in dark conditions. The combined model showed that light regime had a significant effect on refuge use (`r get_light_effect()`), with kōura using refuge more in light than in dark conditions across all treatments. Overall, under light conditions, the pattern of refuge use in the control treatment was more similar to the catfish treatment, whereas under dark conditions it more resembled the eel treatment (Fig. 3; Table S1). There was also no relationship between kōura OCL and refuge use in any of the three treatments (rs = `r get_ocl_corr("catfish")`, `r get_ocl_corr("eel")` and `r get_ocl_corr("control")` for catfish, eel and control treatments respectively, all NS).
 
-For all treatments individual kōura were highly variable in their movement around tanks and use of refuges, even in the time intervals comprising the first 60 minutes of the experiment, before fish were introduced. The coefficient of variations (CVs) for kōura refuge use in the light and the dark before fish introduction were similarly high, being 60.4 % and 58.2 % (both n = 32) respectively, confirming high baseline variation in kōura refuge use, regardless of treatment type. Despite this inherent variation in individual kōura behaviour, clear patterns in kōura refuge use were evident over the course of the experiment. Under light conditions, the control showed the largest overall increase in refuge use (`r get_prop("light","control","before")`% to `r get_prop("light","control","after")`%), driven primarily by a sharp rise in the ‘after’ period, while the catfish treatment showed a more sustained increase across all periods (`r get_prop("light","catfish","before")`% to `r get_prop("light","catfish","after")`%) and the eel treatment the smallest increase (`r get_prop("light","eel","before")`% to `r get_prop("light","eel","after")`% @fig-refuge-plot). Under dark conditions, the pattern shifted, with the catfish treatment showing the greatest increase (`r get_prop("dark","catfish","before")`% to `r get_prop("dark","catfish","after")`%), while the eel treatment showed a modest and non-sustained increase (`r get_prop("dark","eel","before")`% to `r get_prop("dark","eel","during")`% during exposure, returning to `r get_prop("dark","eel","after")`% after), and the control remained comparatively low throughout (`r get_prop("dark","control","before")`% to `r get_prop("dark","control","after")`%).
+For all treatments individual kōura were highly variable in their movement around tanks and use of refuges, even in the time intervals comprising the first 60 minutes of the experiment, before fish were introduced. The coefficient of variations (CVs) for kōura refuge use in the light and the dark before fish introduction were similarly high, being 60.4 % and 58.2 % (both n = 32) respectively, confirming high baseline variation in kōura refuge use, regardless of treatment type. Despite this inherent variation in individual kōura behaviour, clear patterns in kōura refuge use were evident over the course of the experiment. Under light conditions, the control showed the largest overall increase in refuge use (`r get_prop("light","control","before")`% to `r get_prop("light","control","after")`%), driven primarily by a sharp rise in the ‘after’ period, while the catfish treatment showed a more sustained increase across all periods (`r get_prop("light","catfish","before")`% to `r get_prop("light","catfish","after")`%) and the eel treatment the smallest increase (`r get_prop("light","eel","before")`% to `r get_prop("light","eel","after")`% @fig-refuge-plot-ms). Under dark conditions, the pattern shifted, with the catfish treatment showing the greatest increase (`r get_prop("dark","catfish","before")`% to `r get_prop("dark","catfish","after")`%), while the eel treatment showed a modest and non-sustained increase (`r get_prop("dark","eel","before")`% to `r get_prop("dark","eel","during")`% during exposure, returning to `r get_prop("dark","eel","after")`% after), and the control remained comparatively low throughout (`r get_prop("dark","control","before")`% to `r get_prop("dark","control","after")`%).
 
 ## Feeding experiment
-The linear mixed model showed that starvation period had a significant effect on kōura feeding rate (3 days: *p* = `r format_pval(p_day_starve3)`; 4 days: *p* = `r format_pval(p_day_starve4)`; @fig-feeding-plot; @tbl-feeding-summary). Treatment was not included in the main model following model selection. Stratified analyses revealed no significant treatment effects across starvation periods. Although residuals at day 0 violated normality (Shapiro-Wilk *p* = `r sw_day0_p`), the non-parametric Kruskal-Wallis test confirmed no treatment effect (χ² = `r kw_day0_chi`, *p* = `r kw_day0_p`). Days 3 and 4 met normality assumptions and showed no significant treatment effects (*p* = `r p_day3_treat` and `r p_day4_treat` respectively). After 4 days starvation, the mean (±SE) kōura feeding rate (pellets g WW⁻¹) for the control was over two and a half times that of the catfish and eel treatments (`r get_feed_mean_se("control")` compared to `r get_feed_mean_se("catfish")` and `r get_feed_mean_se("eel")` respectively).
+The linear mixed model showed that starvation period had a significant effect on kōura feeding rate (3 days: *p* = `r format_pval(p_day_starve3)`; 4 days: *p* = `r format_pval(p_day_starve4)`; @fig-feeding-plot-ms; @tbl-feeding-summary). Treatment was not included in the main model following model selection. Stratified analyses revealed no significant treatment effects across starvation periods. Although residuals at day 0 violated normality (Shapiro-Wilk *p* = `r sw_day0_p`), the non-parametric Kruskal-Wallis test confirmed no treatment effect (χ² = `r kw_day0_chi`, *p* = `r kw_day0_p`). Days 3 and 4 met normality assumptions and showed no significant treatment effects (*p* = `r p_day3_treat` and `r p_day4_treat` respectively). After 4 days starvation, the mean (±SE) kōura feeding rate (pellets g WW⁻¹) for the control was over two and a half times that of the catfish and eel treatments (`r get_feed_mean_se("control")` compared to `r get_feed_mean_se("catfish")` and `r get_feed_mean_se("eel")` respectively).
 
 # Discussion
 Prey modify their behaviour in response to predation risk, creating a ‘landscape’ of fear that affects foraging, movement, and habitat use independently of actual predation events [@Laundre2001]. However, until relatively recently, most ecological models still assumed that predator and prey populations interacted solely through predator-prey densities by killing and consuming prey despite it being evident that by forcing prey to adopt energetically costly defensive strategies, predators can also reduce prey densities through NCEs [@Preisser2008] Our study joins a number of recent studies (ie., [@Sniegula2025]) showing invasive predators can generate stronger NCEs on native prey than native predators, which consequently have more profound far- reaching impacts on invaded ecosystems. Our study suggests the introduction of a novel predator effectively changes the prey’s fear landscape in ways that a co-evolved predator does not. Kōura are a keystone species in Aotearoa and an ecosystem engineer and so when a predator alters kōura behaviour, this in turn could affect resources or other species through non-consumptive pathways [@Peacor2001]. Such trait-mediated indirect effects represent a form of behavioural trophic cascade [@Schmitz1997], whereby predator presence alone drives ecosystem-level change. Our results also highlight that prey naivety does not always show a failure to respond but can instead produce a generalised over-response consistent with the generalisation theory [@Sih2010; @Ehlman2019], which is important for predicting the ecological impacts of invasive species.
@@ -180,18 +172,39 @@ The corresponding author has declared that none of the authors has any competing
 The code and derived data supporting the findings of this study are openly available on GitHub (https://github.com/OlivierRaven/NCE_Koura_catfish)and a rendered version of the analysis is hosted at https://olivierraven.github.io/NCE_Koura_catfish/. The primary raw dataset is archived on Zenodo (https://doi.org/10.5281/zenodo.19716761). Peer review documents, including the cover letter and reviewer responses, are available in the manuscript repository in the interest of open and transparent science.
 
 # Tables {.unnumbered}
-{{< embed analysis.qmd#tbl-emmeans >}}
+{{< embed analysis.qmd#tbl-emmeans-stratified >}}
 
 # Figures {.unnumbered}
 ![(a) Aquarium layout for kōura refuge seeking behaviour experiment. Each experimental round consisted of eight aquaria run simultaneously. Each tank contained a single kōura (K) and refuge (half terracotta plant pot) on one side of a mesh divider. On the other side was either a single catfish (C), eel (E) or a control with no fish. The mesh divider allowed visual and chemical cues while preventing direct physical contact between tank occupants. (b) Experiments were repeated in light and dark (red light), with photographs showing a catfish in the light regime (left) and and an eel in the dark regime (red light) (right) separated from kōura by mesh dividers.](images/setup_combined.png){#fig-aquarium-setup}
 
-{{< embed analysis.qmd#fig-emmeans-plot >}}
+```{r}
+#| label: fig-emmeans-stratified-ms
+#| echo: false
+#| fig-width: 7
+#| fig-height: 3.5
+#| fig-cap: "Predicted marginal probabilities of refuge use by treatment and experimental period in light and dark conditions. Results are shown separately for light (top) and dark (bottom) conditions, each fitted with a beta-binomial GLMM. Points represent model-estimated marginal means with 95% confidence intervals shown as error bars. Different letters (a, b) indicate statistically significant differences based on Tukey-adjusted pairwise comparisons within each factor. The dashed line at 0.5 marks the threshold where kōura spend half their time in refuge."
+knitr::include_graphics("outputs/fig-emmeans-stratified.png")
+```
 
-{{< embed analysis.qmd#fig-refuge-plot >}}
+```{r}
+#| label: fig-refuge-plot-ms
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: "Kōura refuge use over the course of the experiment, showing the proportion of time spent in refuge across three periods (before, during, and after predator exposure) for each treatment (catfish: dark grey solid line; eel: medium grey dashed line; control: light grey dot-dash line) under light (top) and dark (bottom) conditions. Black dashed vertical lines indicate the start and end of predator exposure and grey vertical lines show individual observation times."
+knitr::include_graphics("outputs/fig-refuge-plot.png")
+```
 
-{{< embed analysis.qmd#fig-feeding-plot >}}
+```{r}
+#| label: fig-feeding-plot-ms
+#| echo: false
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: "Mean (±SE) kōura feeding rate (pellets consumed per gram wet weight kōura) across predator treatments (catfish, eel, control) and starvation periods (0, 3, and 4 days)."
+knitr::include_graphics("outputs/fig-feeding-plot.png")
+```
 
 # Supplementary information {.unnumbered}
 {{< embed analysis.qmd#tbl-refuge-prop >}}
 
-{{< embed analysis.qmd#tbl-feeding-anova >}}
+{{< embed analysis.qmd#tbl-feeding-summary >}}

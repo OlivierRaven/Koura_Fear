@@ -63,6 +63,56 @@ base_theme_bw <- theme_classic() +
     panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.3))
 theme_set(base_theme_bw)
 
+# Format of p values in text
+format_pval <- function(p) {
+  if (p < 0.001) {
+    return("<0.001")
+  } else {
+    return(format(round(p, 3), nsmall = 3))
+  }
+}
+
+# Get treatment contrast
+get_treat_contrast <- function(condition, contrast) {
+  row <- emmeans_stratified %>% 
+    filter(condition == !!condition, contrast == !!contrast)
+  
+  if(nrow(row) == 0) {
+    return("Contrast not found")
+  }
+  
+  p <- format_pval(row$`p.value`[1])
+  p
+}
+
+# Get period contrast p-value
+get_period_contrast <- function(condition, contrast) {
+  row <- emmeans_stratified %>% 
+    filter(condition == !!condition, contrast == !!contrast)
+  format_pval(row$`p.value`)
+}
+
+# Get OCL correlation
+get_ocl_corr <- function(treatment) {
+  if(treatment == "catfish") {
+    rs <- round(spearman_catfish$estimate, 2)
+    p <- format_pval(spearman_catfish$p.value)
+  } else if(treatment == "eel") {
+    rs <- round(spearman_eel$estimate, 2)
+    p <- format_pval(spearman_eel$p.value)
+  } else {
+    rs <- round(spearman_control$estimate, 2)
+    p <- format_pval(spearman_control$p.value)
+  }
+  paste0("rs = ", rs, ", p = ", p)
+}
+
+# Get light overall effect
+get_light_effect <- function() {
+  p <- format_pval(summary(m_light_effect)$coefficients$cond["lightdark", "Pr(>|z|)"])
+  paste0("p = ", p)
+}
+
 ```
 
 # Refuge experiment
@@ -110,7 +160,7 @@ koura_long_ref <- koura_long_ref %>%
 
 ## Refuge table
 ```{r}
-#| label: tbl-s1-refuge-prop
+#| label: tbl-refuge-prop
 #| include: true
 #| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."
 
@@ -167,7 +217,7 @@ get_prop <- function(l, t, p) {
     round(1)      # Round to 1 decimal place
 }
 
-write.csv(refuge_table, file = file.path(out_dir, "tbl-s1-refuge-prop.csv"), row.names = FALSE)
+write.csv(refuge_table, file = file.path(out_dir, "tbl-refuge-prop.csv"), row.names = FALSE)
 
 if (knitr::is_html_output()) {
   datatable(
@@ -199,7 +249,7 @@ if (knitr::is_html_output()) {
 
 ## Refuge plot
 ```{r}
-#| label: fig-3-refuge-plot
+#| label: fig-refuge-plot
 #| include: true
 #| fig-width: 8
 #| fig-height: 5
@@ -230,9 +280,9 @@ refuge_plot <- prop_location_time %>%
   scale_linetype_manual(values = c("solid", "dashed", "dotdash"),
                         labels = c("catfish" = "Catfish", "eel" = "Eel", "control" = "Control")) +
   facet_grid(light ~ ., scales = "free_x", labeller = as_labeller(str_to_title)) +
-  labs(x = "Time (minutes)", y = "Proportion in refuge", colour = "Treatment", linetype = "Treatment")
+  labs(x = "Time (minutes)", y = "Proportion of refuge use", colour = "Treatment", linetype = "Treatment")
 
-ggsave(file.path(out_dir, "fig-3-refuge-plot.png"), refuge_plot, width = 8, height = 5, dpi = 300)
+ggsave(file.path(out_dir, "fig-refuge-plot.png"), refuge_plot, width = 8, height = 5, dpi = 300)
 
 refuge_plot
 
@@ -257,168 +307,156 @@ round_summary <- koura_stat %>%
     light = relevel(factor(light), ref = "light"),   
     period = relevel(factor(period), ref = "before"))
 
-# Model selection
-models_bb <- list(
-  # --- Fixed effects structure (with tank as random, the defensible RE) ---
-  m1_main = glmmTMB(
-    cbind(n_refuge, n_total - n_refuge) ~ treatment + light + period + (1 | tank),
-    data = round_summary, family = betabinomial),
-  m2_trt_period = glmmTMB(
-    cbind(n_refuge, n_total - n_refuge) ~ treatment * period + light + (1 | tank),
-    data = round_summary, family = betabinomial),
-  m3_trt_light = glmmTMB(
-    cbind(n_refuge, n_total - n_refuge) ~ treatment * light + period + (1 | tank),
-    data = round_summary, family = betabinomial),
-  m4_light_period = glmmTMB(
-    cbind(n_refuge, n_total - n_refuge) ~ treatment + light * period + (1 | tank),
-    data = round_summary, family = betabinomial),
-  m5_twoway = glmmTMB(
-    cbind(n_refuge, n_total - n_refuge) ~ treatment * light + treatment * period + light * period + (1 | tank),
-    data = round_summary, family = betabinomial),
-  m6_full = glmmTMB(
-    cbind(n_refuge, n_total - n_refuge) ~ treatment * light * period + (1 | tank),
-    data = round_summary, family = betabinomial),
-  # --- Random effects structure (main effects fixed, vary RE) ---
-  m7_no_re = glmmTMB(cbind(n_refuge, n_total - n_refuge) ~ treatment + light + period, data = round_summary, family = betabinomial),
-  m8_tank_round = glmmTMB(cbind(n_refuge, n_total - n_refuge) ~ treatment + light + period + (1 | tank) + (1 | round),  data = round_summary, family = betabinomial),
-  # --- Null model for baseline comparison ---
-  m9_null = glmmTMB(
-    cbind(n_refuge, n_total - n_refuge) ~ 1 + (1 | tank),
-    data = round_summary, family = betabinomial)
-)
+# Light condition only (rounds 1-4)
+light_data <- round_summary %>% filter(light == "light")
+m_light <- glmmTMB(cbind(n_refuge, n_total - n_refuge) ~ treatment + period + (1|tank) + (1|round), 
+                    data = light_data, family = betabinomial)
 
-# Calculate AICc for all models
-aicc_vals <- sapply(models_bb, AICc)
+# Dark condition only (rounds 5-8)
+dark_data <- round_summary %>% filter(light == "dark")
+m_dark <- glmmTMB(cbind(n_refuge, n_total - n_refuge) ~ treatment + period + (1|tank) + (1|round), 
+                   data = dark_data, family = betabinomial)
 
-comparison_bb <- data.frame(
-  model  = names(models_bb),
-  AIC    = sapply(models_bb, AIC),
-  BIC    = sapply(models_bb, BIC),
-  logLik = sapply(models_bb, \(m) as.numeric(logLik(m))),
-  AICc   = sapply(models_bb, AICc)) %>%
-  arrange(AICc) %>%
-  mutate(delta_AIC  = round(AIC  - min(AIC),  2), delta_AICc = round(AICc - min(AICc), 2))
-
-print(comparison_bb)
-
-# m7_no_re best model 
-
-m_final <- glmmTMB(
-  cbind(n_refuge, n_total - n_refuge) ~ treatment + light + period, data = round_summary, family = betabinomial)
-
-summary(m_final)
+summary(m_light)
+summary(m_dark)
 
 # Model diagnostics 
-sim_final <- simulateResiduals(m_final)
-plot(sim_final)
-testDispersion(sim_final)
-testZeroInflation(sim_final)
+sim_light <- simulateResiduals(m_light)
+plot(sim_light)
+testDispersion(sim_light)
+testZeroInflation(sim_light)
+
+# Model diagnostics 
+sim_dark <- simulateResiduals(m_dark)
+plot(sim_dark)
+testDispersion(sim_dark)
+testZeroInflation(sim_dark)
+
+## Fit light model WITHOUT round RE to put light in there
+m_light_effect <- glmmTMB(cbind(n_refuge, n_total - n_refuge) ~ treatment + light + period + (1|tank), data = round_summary, family = betabinomial)
+
+summary(m_light_effect)
 
 ```
 
-### Fixed effect tbl
+## Fixed effects - Light and Dark
 ```{r}
-#| label: tbl-1-fixed-effects
+#| label: tbl-fixed-effects-stratified
 #| include: true
-#| tbl-cap: "Fixed effects of the beta-binomial GLMM for kōura refuge use."
+#| tbl-cap: "Fixed effects of beta-binomial GLMMs for kōura refuge use in light and dark conditions."
 
-# Save fixed effects table 
-fixed_bb <- as.data.frame(summary(m_final)$coefficients$cond) %>%
+# Light condition
+fixed_light <- as.data.frame(summary(m_light)$coefficients$cond) %>%
   rownames_to_column("term") %>%
-  mutate(across(where(is.numeric), round, 3))
+  mutate(condition = "Light", across(where(is.numeric), round, 3))
 
-write.csv(fixed_bb, file.path(out_dir, "tbl-1-fixed-effects.csv"), row.names = FALSE)
+# Dark condition
+fixed_dark <- as.data.frame(summary(m_dark)$coefficients$cond) %>%
+  rownames_to_column("term") %>%
+  mutate(condition = "Dark", across(where(is.numeric), round, 3))
 
-knitr::kable(fixed_bb, col.names = c("Term", "Estimate", "Std. Error", "z value", "p value"))
+# Combine
+fixed_bb_stratified <- bind_rows(fixed_light, fixed_dark) %>%
+  select(condition, everything())
+
+write.csv(fixed_bb_stratified, file.path(out_dir, "tbl-fixed-effects-stratified.csv"), row.names = FALSE)
+
+knitr::kable(fixed_bb_stratified, col.names = c("Condition", "Term", "Estimate", "Std. Error", "z value", "p value"))
 ```
 
-### Emmeans tbl
+## Emmeans - Light and Dark
 ```{r}
-#| label: tbl-2-emmeans
+#| label: tbl-emmeans-stratified
 #| include: true
-#| tbl-cap: "Pairwise contrasts from the beta-binomial GLMM for kōura refuge use. Odds ratios and p-values are shown for treatment, light condition, and period comparisons. P-values are Tukey-adjusted for multiple comparisons within each factor."
+#| tbl-cap: "Pairwise contrasts for kōura refuge use in light and dark conditions. Results are shown separately for each light condition from beta-binomial GLMMs. Odds ratios and p-values are shown for treatment and period comparisons. P-values are Sidak-adjusted for multiple comparisons within each factor."
 
-# Marginal means and pairwise contrasts 
-emm_treatment <- as.data.frame(pairs(emmeans(m_final, ~ treatment, type = "response"))) %>% mutate(factor = "treatment")
-emm_light     <- as.data.frame(pairs(emmeans(m_final, ~ light,     type = "response"))) %>% mutate(factor = "light")
-emm_period    <- as.data.frame(pairs(emmeans(m_final, ~ period,    type = "response"))) %>% mutate(factor = "period")
+# Light
+emm_treat_light <- pairs(emmeans(m_light, ~ treatment, type = "response"), adjust = "tukey") %>%
+  as.data.frame() %>% mutate(condition = "Light")
 
-emmeans_bb <- bind_rows(emm_treatment, emm_light, emm_period) %>%
+emm_period_light <- pairs(emmeans(m_light, ~ period, type = "response"), adjust = "tukey") %>%
+  as.data.frame() %>% mutate(condition = "Light")
+
+# Dark
+emm_treat_dark <- pairs(emmeans(m_dark, ~ treatment, type = "response"), adjust = "tukey") %>%
+  as.data.frame() %>% mutate(condition = "Dark")
+
+emm_period_dark <- pairs(emmeans(m_dark, ~ period, type = "response"), adjust = "tukey") %>%
+  as.data.frame() %>% mutate(condition = "Dark")
+
+# Combine
+emmeans_stratified <- bind_rows(emm_treat_light, emm_period_light, emm_treat_dark, emm_period_dark) %>%
+  select(condition, everything()) %>%
   mutate(across(where(is.numeric), round, 3))
 
+write.csv(emmeans_stratified, file.path(out_dir, "tbl-emmeans-stratified.csv"), row.names = FALSE)
 
-# Get emmeans for each factor
-emm_treatment <- emmeans(m_final, ~ treatment, type = "response")
-emm_light     <- emmeans(m_final, ~ light, type = "response")
-emm_period    <- emmeans(m_final, ~ period, type = "response")
-
-# Compute CLDs for each factor
-cld_treatment <- multcomp::cld(emm_treatment, Letters = letters, adjust = "sidak")
-cld_light     <- multcomp::cld(emm_light, Letters = letters, adjust = "sidak")
-cld_period    <- multcomp::cld(emm_period, Letters = letters, adjust = "sidak")
-
-# Add factor labels and rename x variable for plotting
-cld_treatment <- cld_treatment %>% mutate(factor = "treatment", x = treatment)
-cld_light     <- cld_light %>% mutate(factor = "light", x = light)
-cld_period    <- cld_period %>% mutate(factor = "period", x = period)
-
-# Combine all CLDs
-cld_all <- bind_rows(cld_treatment, cld_light, cld_period) %>%
-  mutate(factor = factor(factor, levels = c("treatment", "light", "period")),
-         x = factor(x, levels = c("catfish", "eel", "control", "dark", "light", "before", "during", "after")))
-
-# extract specific p-values for inline reporting
-p_catfish_eel     <- emmeans_bb %>% filter(contrast == "catfish / eel")     %>% pull(p.value)
-p_catfish_control <- emmeans_bb %>% filter(contrast == "control / catfish") %>% pull(p.value)
-p_control_eel     <- emmeans_bb %>% filter(contrast == "control / eel")     %>% pull(p.value)
-p_before_after    <- emmeans_bb %>% filter(contrast == "before / after")    %>% pull(p.value)
-p_before_during   <- emmeans_bb %>% filter(contrast == "before / during")   %>% pull(p.value)
-p_during_after    <- emmeans_bb %>% filter(contrast == "during / after")    %>% pull(p.value)
-p_dark_light      <- emmeans_bb %>% filter(contrast == "light / dark")      %>% pull(p.value)
-
-write.csv(emmeans_bb,  file.path(out_dir, "tbl-2-emmeans.csv"), row.names = FALSE)
-
-knitr::kable(emmeans_bb,col.names = c("Contrast", "Odds ratio", "SE", "df", "Null", "z value", "p value", "Factor"), digits = 3)
-
+knitr::kable(emmeans_stratified, col.names = c("Condition", "Contrast", "Odds ratio", "SE", "df", "Null", "z value", "p value"))
 ```
 
-## Emmeans plot
+## Emmeans plots - Light and Dark
 ```{r}
-#| label: fig-2-emmeans-plot
+#| label: fig-emmeans-stratified
 #| include: true
-#| fig-width: 5
-#| fig-height: 3
-#| fig-cap: "Predicted marginal probabilities of refuge use from the beta-binomial GLMM for each level of treatment, light condition, and experimental period. Points represent model-estimated marginal means averaged over other factors, with 95% confidence intervals shown as error bars. Different letters (a, b) indicate statistically significant differences between groups within each factor based on multiple comparison-adjusted pairwise comparisons. The dashed line at 0.5 marks the threshold where kōura spend half their time in refuge."
+#| fig-width: 7
+#| fig-height: 3.5
+#| fig-cap: "Predicted marginal probabilities of refuge use by treatment and experimental period in light and dark conditions. Results are shown separately for light (top) and dark (bottom) conditions, each fitted with a beta-binomial GLMM. Points represent model-estimated marginal means with 95% confidence intervals shown as error bars. Different letters (a, b) indicate statistically significant differences based on Tukey-adjusted pairwise comparisons within each factor. The dashed line at 0.5 marks the threshold where kōura spend half their time in refuge."
 
-# Make plot
-# get predicted probabilities (not contrasts) for plotting
-emm_treat_pred  <- as.data.frame(emmeans(m_final, ~ treatment, type = "response"))
-emm_light_pred  <- as.data.frame(emmeans(m_final, ~ light,     type = "response"))
-emm_period_pred <- as.data.frame(emmeans(m_final, ~ period,    type = "response"))
+# Get predictions AND compute CLDs for both models
+# Light condition
+emm_treat_light_pred <- as.data.frame(emmeans(m_light, ~ treatment, type = "response")) %>%
+  mutate(condition = "Light", factor = "Treatment", x = str_to_title(treatment))
+cld_treat_light <- as.data.frame(multcomp::cld(emmeans(m_light, ~ treatment, type = "response"), 
+                                                Letters = letters, adjust = "sidak")) %>%
+  mutate(condition = "Light", factor = "Treatment", x = str_to_title(treatment))
 
-# add factor label and rename x variable
-emm_treat_pred  <- emm_treat_pred  %>% mutate(factor = "treatment", x = treatment)
-emm_light_pred  <- emm_light_pred  %>% mutate(factor = "light",     x = light)
-emm_period_pred <- emm_period_pred %>% mutate(factor = "period",    x = period)
+emm_period_light_pred <- as.data.frame(emmeans(m_light, ~ period, type = "response")) %>%
+  mutate(condition = "Light", factor = "Period", x = str_to_title(period))
+cld_period_light <- as.data.frame(multcomp::cld(emmeans(m_light, ~ period, type = "response"), 
+                                                 Letters = letters, adjust = "sidak")) %>%
+  mutate(condition = "Light", factor = "Period", x = str_to_title(period))
+
+# Dark condition
+emm_treat_dark_pred <- as.data.frame(emmeans(m_dark, ~ treatment, type = "response")) %>%
+  mutate(condition = "Dark", factor = "Treatment", x = str_to_title(treatment))
+cld_treat_dark <- as.data.frame(multcomp::cld(emmeans(m_dark, ~ treatment, type = "response"), 
+                                               Letters = letters, adjust = "sidak")) %>%
+  mutate(condition = "Dark", factor = "Treatment", x = str_to_title(treatment))
+
+emm_period_dark_pred <- as.data.frame(emmeans(m_dark, ~ period, type = "response")) %>%
+  mutate(condition = "Dark", factor = "Period", x = str_to_title(period))
+cld_period_dark <- as.data.frame(multcomp::cld(emmeans(m_dark, ~ period, type = "response"), 
+                                                Letters = letters, adjust = "sidak")) %>%
+  mutate(condition = "Dark", factor = "Period", x = str_to_title(period))
+
+# Combine all (Period first, Treatment second for left-to-right order)
+emm_all_stratified <- bind_rows(emm_period_light_pred, emm_treat_light_pred,
+                                emm_period_dark_pred, emm_treat_dark_pred) %>%
+  mutate(condition = factor(condition, levels = c("Light","Dark")),
+  factor = factor(factor, levels = c("Treatment", "Period")),
+  x = factor(x, levels = c("Catfish", "Eel", "Control", "Before", "During", "After")))
 
 
-emm_all <- bind_rows(emm_treat_pred, emm_light_pred, emm_period_pred) %>%
-  mutate(factor = factor(factor, levels = c("treatment", "light", "period")),
-         x = factor(x, levels = c("catfish", "eel", "control", "light", "dark", "before", "during", "after")))
+cld_all_stratified <- bind_rows(cld_period_light, cld_treat_light,
+                                cld_period_dark, cld_treat_dark) %>%
+  mutate(condition = factor(condition, levels = c("Light","Dark")),
+  factor = factor(factor, levels = c("Treatment", "Period")),
+  x = factor(x, levels = c("Catfish", "Eel", "Control", "Before", "During", "After")))
 
-emmeans_plot <- ggplot(emm_all, aes(x = x, y = prob, ymin = asymp.LCL, ymax = asymp.UCL)) +
+
+# Plot with letters
+emmeans_plot_stratified <- ggplot(emm_all_stratified, aes(x = x, y = prob, ymin = asymp.LCL, ymax = asymp.UCL)) +
   geom_point(size = 3) +
   geom_errorbar(width = 0.2) +
-  geom_text(data = cld_all, aes(x = x, y = asymp.UCL + 0.05, label = .group), inherit.aes = FALSE) +
-  facet_wrap(~ factor, scales = "free_x", labeller = as_labeller(str_to_title)) +
+  geom_text(data = cld_all_stratified, aes(x = x, y = asymp.UCL + 0.08, label = .group), inherit.aes = FALSE, size = 4) +
+  facet_grid(condition ~ factor, scales = "free_x") +
   scale_y_continuous("Predicted probability of refuge use", limits = c(0, 1)) +
-  scale_x_discrete(NULL, labels = str_to_title) +
-  geom_hline(yintercept = 0.5, linetype = "dashed", colour = "grey50")
+  scale_x_discrete(NULL) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", colour = "grey50") 
 
-ggsave(file.path(out_dir, "fig-2-emmeans-plot.png"), emmeans_plot, width = 5, height = 3, dpi = 300)
+ggsave(file.path(out_dir, "fig-emmeans-stratified.png"), emmeans_plot_stratified, width = 5, height = 4, dpi = 300)
 
-emmeans_plot
-
+emmeans_plot_stratified
 ```
 
 ```{r}
@@ -427,18 +465,39 @@ emmeans_plot
 #| fig-width: 3
 #| fig-height: 3
 
-emm_treatment <- bind_rows(emm_treat_pred) %>%
-  mutate(factor = factor(factor, levels = c("treatment")), x = factor(x, levels = c("catfish", "eel", "control")))
+emm_treat_light_pred <- as.data.frame(emmeans(m_light, ~ treatment, type = "response")) %>%
+  mutate(condition = "Light", x = str_to_title(treatment))
+cld_treat_light <- as.data.frame(multcomp::cld(emmeans(m_light, ~ treatment, type = "response"), 
+                                                Letters = letters, adjust = "sidak")) %>%
+  mutate(condition = "Light", x = str_to_title(treatment))
 
-emmeans_treatment_plot <- ggplot(emm_treatment, aes(x = x, y = prob, ymin = asymp.LCL, ymax = asymp.UCL)) +
+emm_treat_dark_pred <- as.data.frame(emmeans(m_dark, ~ treatment, type = "response")) %>%
+  mutate(condition = "Dark", x = str_to_title(treatment))
+cld_treat_dark <- as.data.frame(multcomp::cld(emmeans(m_dark, ~ treatment, type = "response"), 
+                                               Letters = letters, adjust = "sidak")) %>%
+  mutate(condition = "Dark", x = str_to_title(treatment))
+
+emm_treat_all <- bind_rows(emm_treat_light_pred, emm_treat_dark_pred) %>%
+  mutate(condition = factor(condition, levels = c("Dark", "Light")),
+         x = factor(x, levels = c("Catfish", "Eel", "Control")))
+
+cld_treat_all <- bind_rows(cld_treat_light, cld_treat_dark) %>%
+  mutate(condition = factor(condition, levels = c("Dark", "Light")),
+         x = factor(x, levels = c("Catfish", "Eel", "Control")))
+
+treat_plot <- ggplot(emm_treat_all, aes(x = x, y = prob, ymin = asymp.LCL, ymax = asymp.UCL)) +
   geom_point(size = 3) +
   geom_errorbar(width = 0.2) +
-  geom_text(data = cld_treatment, aes(x = x, y = asymp.UCL + 0.05, label = .group), inherit.aes = FALSE) +
-  scale_y_continuous("Predicted probability of refuge use", limits = c(0, 1)) +
-  scale_x_discrete(NULL, labels = str_to_title) +
+  geom_text(data = cld_treat_all, aes(x = x, y = asymp.UCL + 0.08, label = .group), 
+            inherit.aes = FALSE, size = 4) +
+  facet_wrap(~ condition) +
+  scale_y_continuous("Predicted Probability of Refuge Use", limits = c(0, 1)) +
+  scale_x_discrete(NULL) +
   geom_hline(yintercept = 0.5, linetype = "dashed", colour = "grey50")
 
-emmeans_treatment_plot
+ggsave(file.path(out_dir, "fig-treatment-emmeans.png"), treat_plot, width = 4, height = 3, dpi = 300)
+
+treat_plot
 
 ```
 
@@ -510,7 +569,7 @@ koura_time_plot
 
 ```
 
-## koura length refuge use
+## Koura length refuge use
 ```{r}
 #| label: koura-refuge-use
 #| include: false
@@ -548,6 +607,12 @@ spearman_control
 
 p_raw <- c(spearman_catfish$p.value, spearman_eel$p.value, spearman_control$p.value)
 p.adjust(p_raw, method = "bonferroni")
+
+# Extract formatted p-values and correlations
+rho_catfish <- round(spearman_catfish$estimate, 3)
+rho_eel <- round(spearman_eel$estimate, 3)
+rho_control <- round(spearman_control$estimate, 3)
+p_adj <- p.adjust(p_raw, method = "bonferroni")
 
 # Optional quick scatter plots to visualise
 par(mfrow = c(1, 3))
@@ -651,7 +716,7 @@ knitr::kable(feeding_summary, col.names = c("Treatment", "Days starved", "Mean (
 
 ## Feeding plot
 ```{r}
-#| label: fig-4-feeding-plot
+#| label: fig-feeding-plot
 #| include: true
 #| fig-width: 5
 #| fig-height: 4
@@ -665,7 +730,7 @@ feeding_plot <- ggplot(df_feeding, aes(x = factor(day_starve),  y = pellets_per_
   labs(x = "Starvation period (days)",  y = "Feeding rate (pellets consumed g WW⁻¹)",  fill = "Treatment") +
   theme(legend.position = "right")
 
-ggsave(file.path(out_dir, "fig-4-feeding-plot.png"), feeding_plot, width = 5, height = 4, dpi = 300)
+ggsave(file.path(out_dir, "fig-feeding-plot.png"), feeding_plot, width = 5, height = 4, dpi = 300)
 
 feeding_plot
 
@@ -676,111 +741,130 @@ feeding_plot
 #| label: feeding-stats
 #| include: false
 
-# Model selection
-feeding_models_lm <- list(
-  m0 = lm(pellets_per_g ~ 1, data = df_feeding),
-  m1 = lm(pellets_per_g ~ treatment * day_starve, data = df_feeding),
-  m2 = lm(pellets_per_g ~ treatment + day_starve, data = df_feeding),
-  m5 = lm(pellets_per_g ~ treatment, data = df_feeding),
-  m6 = lm(pellets_per_g ~ day_starve, data = df_feeding))
+# Model selection on LMER models
+feeding_models_lmer <- list(
+  m0 = lmer(pellets_per_g ~ 1 + (1 | exp_tank), data = df_feeding),
+  m1 = lmer(pellets_per_g ~ treatment * day_starve + (1 | exp_tank), data = df_feeding),
+  m2 = lmer(pellets_per_g ~ treatment + day_starve + (1 | exp_tank), data = df_feeding),
+  m5 = lmer(pellets_per_g ~ treatment + (1 | exp_tank), data = df_feeding),
+  m6 = lmer(pellets_per_g ~ day_starve + (1 | exp_tank), data = df_feeding))
 
-comparison_lm <- data.frame(
-  model  = names(feeding_models_lm),
-  AIC    = sapply(feeding_models_lm, AIC),
-  BIC    = sapply(feeding_models_lm, BIC),
-  logLik = sapply(feeding_models_lm, \(m) as.numeric(logLik(m))),
-  AICc   = sapply(feeding_models_lm, AICc),
-  k      = sapply(feeding_models_lm, \(m) attr(logLik(m), "df"))) %>%
+comparison_lmer <- data.frame(
+  model  = names(feeding_models_lmer),
+  AIC    = sapply(feeding_models_lmer, AIC),
+  BIC    = sapply(feeding_models_lmer, BIC),
+  logLik = sapply(feeding_models_lmer, \(m) as.numeric(logLik(m))),
+  AICc   = sapply(feeding_models_lmer, AICc),
+  k      = sapply(feeding_models_lmer, \(m) attr(logLik(m), "df"))) %>%
   arrange(AICc) %>%
   mutate(delta_AICc = round(AICc - min(AICc), 2))
 
-print(comparison_lm)
+print(comparison_lmer)
 
-# Best model by AICc: m6 (day_starve only, delta_AICc = 0.00)
-# Treatment does not improve model fit (m2 delta_AICc = 2.70, m1 delta_AICc = 4.41)
-# Interaction model retained for hypothesis-driven pairwise comparisons
-lm_feed <- lm(pellets_per_g ~ treatment + day_starve, data = df_feeding)
-summary(lm_feed)
+# Best model by AICc: m0 (intercept-only, delta_AICc = 0.00)
+# However, m6 (day_starve only, delta_AICc = 0.86) is retained as it is 
+# biologically interpretable and accounts for tank-level variation while 
+# testing starvation effects. Treatment does not improve model fit 
+# (m2 delta_AICc = 14.38, m1 delta_AICc = 32.07).
 
-# extract p-values for inline reporting
-anova_feed <- Anova(lm_feed, type = "III")
-p_treatment    <- round(anova_feed["treatment", "Pr(>F)"], 3)
-p_day_starve   <- round(anova_feed["day_starve", "Pr(>F)"], 4)
-p_interaction  <- round(anova_feed["treatment:day_starve", "Pr(>F)"], 3)
-p_shapiro_feed <- round(shapiro.test(residuals(lm_feed))$p.value, 3)
+# Final model with tank as random effect
+lmm_feed <- lmer(pellets_per_g ~ day_starve + (1 | exp_tank), data = df_feeding)
+summary(lmm_feed)
 
+# Extract p-values and statistics for inline reporting
+# From summary output (t-tests, not Chisq)
+summary_lmm <- summary(lmm_feed)
+p_day_starve3 <- round(summary_lmm$coefficients["day_starve3", "Pr(>|t|)"], 4)
+p_day_starve4 <- round(summary_lmm$coefficients["day_starve4", "Pr(>|t|)"], 4)
+p_shapiro_feed <- round(shapiro.test(residuals(lmm_feed))$p.value, 3)
 
 # emmeans for inline values
-emm_feed_df <- as.data.frame(emmeans(lm_feed, ~ treatment * day_starve)) %>%
+emm_feed_df <- as.data.frame(emmeans(lmm_feed, ~ day_starve)) %>%
   mutate(across(where(is.numeric), round, 3))
 
-get_emm_se <- function(trt, starve) {
-  row <- emm_feed_df %>% filter(treatment == trt, day_starve == starve)
-  paste0(row$emmean, " ± ", row$SE)
-}
-
-# ANOVA table for reporting
-Anova(lm_feed, type = "III")
-
-# Check normality of residuals
-shapiro.test(residuals(lm_feed))
-
-# Diagnostic plots
+# Model diagnostics for lmer
 par(mfrow = c(2, 2))
-plot(lm_feed)
+plot(lmm_feed)
 par(mfrow = c(1, 1))
 
-# Pairwise comparisons for treatment (Tukey-adjusted)
-emm_treatment <- emmeans(lm_feed, ~ treatment)
-pairs(emm_treatment, adjust = "tukey")
+# Check normality of residuals
+shapiro.test(residuals(lmm_feed))
 
 # Pairwise comparisons for day_starve (Tukey-adjusted)
-emm_day_starve <- emmeans(lm_feed, ~ day_starve)
+emm_day_starve <- emmeans(lmm_feed, ~ day_starve)
 pairs(emm_day_starve, adjust = "tukey")
 
-# Split data by starvation period (for stratified analysis)
+# Stratified analysis by starvation period (to avoid confounding)
+# Use lm here since each stratum has limited observations
 df_day0 <- df_feeding %>% filter(day_starve == 0)
 df_day3 <- df_feeding %>% filter(day_starve == 3)
 df_day4 <- df_feeding %>% filter(day_starve == 4)
 
-# Separate linear models per starvation period
 lm_day0 <- lm(pellets_per_g ~ treatment, data = df_day0)
 lm_day3 <- lm(pellets_per_g ~ treatment, data = df_day3)
 lm_day4 <- lm(pellets_per_g ~ treatment, data = df_day4)
 
-# ANOVA for each
-summary(aov(lm_day0))
-summary(aov(lm_day3))
-summary(aov(lm_day4))
+summary(lm_day0)
+summary(lm_day3)
+summary(lm_day4)
 
-# Pairwise comparisons for each separately (no pooling across starvation periods)
-pairs(emmeans(lm_day0, ~ treatment))
-pairs(emmeans(lm_day3, ~ treatment))
-pairs(emmeans(lm_day4, ~ treatment))
+# Pairwise comparisons for treatment within each starvation period
+pairs(emmeans(lm_day0, ~ treatment), adjust = "tukey")
+pairs(emmeans(lm_day3, ~ treatment), adjust = "tukey")
+pairs(emmeans(lm_day4, ~ treatment), adjust = "tukey")
 
 # Check normality of residuals for each
 shapiro.test(residuals(lm_day0))
 shapiro.test(residuals(lm_day3))
 shapiro.test(residuals(lm_day4))
 
-# Non-parametric alternative if normality violated
 kruskal.test(pellets_per_g ~ treatment, data = df_day0)
-kruskal.test(pellets_per_g ~ treatment, data = df_day3)
-kruskal.test(pellets_per_g ~ treatment, data = df_day4)
+
+
+# Extract t and p values from main model
+p_day_starve3 <- round(summary_lmm$coefficients["day_starve3", "Pr(>|t|)"], 3)
+p_day_starve4 <- round(summary_lmm$coefficients["day_starve4", "Pr(>|t|)"], 3)
+
+# Shapiro-Wilk for day 0
+sw_day0 <- shapiro.test(residuals(lm_day0))
+sw_day0_p <- round(sw_day0$p.value, 4)
+
+# Kruskal-Wallis result for day 0
+kw_day0 <- kruskal.test(pellets_per_g ~ treatment, data = df_day0)
+kw_day0_chi <- round(kw_day0$statistic, 4)
+kw_day0_p <- round(kw_day0$p.value, 4)
+
+# p-values from stratified analyses
+p_day3_treat <- round(anova(lm_day3)[1, "Pr(>F)"], 4)
+p_day4_treat <- round(anova(lm_day4)[1, "Pr(>F)"], 4)
+
+# Get means from day 4 stratified model
+emm_day4 <- as.data.frame(emmeans(lm_day4, ~ treatment))
+
+get_feed_mean_se <- function(treatment_name) {
+  row <- emm_day4 %>% filter(treatment == treatment_name)
+  paste0(round(row$emmean, 3), " ± ", round(row$SE, 3))
+}
+
 ```
 
 ### feeding anova tbl
 ```{r}
-#| label: tbl-s2-feeding-anova
+#| label: tbl-feeding-summary
 #| include: true
-#| tbl-cap: "Type III ANOVA table for the linear model of kōura feeding rate (pellets consumed per gram body weight). Treatment and starvation period included as fixed effects."
+#| tbl-cap: "Fixed effects from the linear mixed model of kōura feeding rate (pellets consumed per gram body weight). Starvation period included as fixed effect with tank as random intercept."
 
-write.csv(anova_feed,  file.path(out_dir, "tbl-s2-feeding-anova.csv"), row.names = TRUE)
-
-as.data.frame(anova_feed) %>%
+# Extract summary table from lmer
+summary_lmm <- summary(lmm_feed)
+feed_summary <- as.data.frame(summary_lmm$coefficients) %>%
   rownames_to_column("term") %>%
-  mutate(across(where(is.numeric), round, 3)) %>%
-  knitr::kable(col.names = c("Term", "Sum Sq", "Df", "F value", "p value"))
+  mutate(across(where(is.numeric), round, 3))
+
+write.csv(feed_summary, file.path(out_dir, "tbl-feeding-summary.csv"), row.names = FALSE)
+
+knitr::kable(feed_summary, 
+             col.names = c("Term", "Estimate", "Std. Error", "df", "t value", "p value"),
+             digits = 3)
 ```
 
 # Session info

@@ -280,7 +280,7 @@ refuge_plot <- prop_location_time %>%
   scale_linetype_manual(values = c("solid", "dashed", "dotdash"),
                         labels = c("catfish" = "Catfish", "eel" = "Eel", "control" = "Control")) +
   facet_grid(light ~ ., scales = "free_x", labeller = as_labeller(str_to_title)) +
-  labs(x = "Time (minutes)", y = "Proportion in refuge", colour = "Treatment", linetype = "Treatment")
+  labs(x = "Time (minutes)", y = "Proportion of refuge use", colour = "Treatment", linetype = "Treatment")
 
 ggsave(file.path(out_dir, "fig-refuge-plot.png"), refuge_plot, width = 8, height = 5, dpi = 300)
 
@@ -450,7 +450,7 @@ emmeans_plot_stratified <- ggplot(emm_all_stratified, aes(x = x, y = prob, ymin 
   geom_errorbar(width = 0.2) +
   geom_text(data = cld_all_stratified, aes(x = x, y = asymp.UCL + 0.08, label = .group), inherit.aes = FALSE, size = 4) +
   facet_grid(condition ~ factor, scales = "free_x") +
-  scale_y_continuous("Predicted Probability of Refuge Use", limits = c(0, 1)) +
+  scale_y_continuous("Predicted probability of refuge use", limits = c(0, 1)) +
   scale_x_discrete(NULL) +
   geom_hline(yintercept = 0.5, linetype = "dashed", colour = "grey50") 
 

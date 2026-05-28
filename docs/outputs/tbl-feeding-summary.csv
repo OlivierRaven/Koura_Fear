@@ -1,0 +1,4 @@
+"term","Estimate","Std. Error","df","t value","Pr(>|t|)"
+"(Intercept)",0.023,0.024,43,0.951,0.347
+"day_starve3",0.132,0.033,43,4.033,0
+"day_starve4",0.067,0.033,43,2.056,0.046

@@ -16,6 +16,7 @@ manuscript:
 format:
   html:
     theme: cosmo
+    format-links: [pdf, docx]
   pdf:
     toc: true
     number-sections: true
