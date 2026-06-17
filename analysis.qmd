@@ -27,7 +27,7 @@ execute:
 #| label: setup
 #| include: false
 
-packages <- c("ggpattern","multcomp","DT","car","glmmTMB","AICcmodavg", "ggeffects","DHARMa", "brms", "emmeans", "lme4","lmerTest","vegan","ggnewscale","multcompView","patchwork","janitor","lubridate","stringr","tidyverse","dplyr","ggplot2","readxl","writexl","readr")
+packages <- c("ggpattern","multcomp","DT","glmmTMB","AICcmodavg","DHARMa","emmeans","lme4","lmerTest","multcompView","patchwork","tidyverse","readxl")
 
 # Load packages if not already installed
 quiet_load <- function(pkg) {
@@ -36,6 +36,7 @@ quiet_load <- function(pkg) {
   suppressPackageStartupMessages(require(pkg, character.only = TRUE, quietly = TRUE))
   invisible(TRUE)}
 
+options(repos = c(CRAN = "https://cloud.r-project.org"))
 invisible(lapply(packages, quiet_load))
 
 exc_file_dir <- "data/raw/NCE_data.xlsx"

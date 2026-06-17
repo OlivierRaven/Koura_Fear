@@ -90,6 +90,10 @@ funding: "This research was supported by the Fish Futures programme funded throu
 citation:
   container-title: "..."
 
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+
 ---
 
 ```{r}
@@ -109,7 +113,7 @@ Biological invasions can have profound impacts on invaded ecosystems, particular
 
 Freshwater crayfish often live in turbid flowing water or in the dark depths of lakes where they rely primarily on chemical cues (kairomones) rather than visual cues to detect and respond to predatory fish [@Blake1993; @Bronmark2012; @Wood2020b]. These kairomones carry signals via excreta, mucus, or skin, that crayfish use to assess predator risk, responding more strongly to predators that have consumed conspecifics and to alarm cues released when prey is injured or killed [@Gherardi2011; @Beattie2018]. Exposure to kairomones from predatory fish can generate NCEs, including reduced growth and reduced activity levels in crayfish [@Adams2007; @RambergPihl2020], and even non-predatory fish can cause these behaviour changes, likely through heightened generalised awareness of risk [@Nystrom2005]. However, the strength of these responses depends on prior experience as wild-caught individual crayfish show stronger antipredator responses than farmed conspecifics naive to predators [@Martin2014], indicating that both learned behavior and evolutionary history shape kairomone detection.
 
-In Aotearoa-New Zealand (hereafter Aotearoa), the endemic northern freshwater crayfish *Paranephrops planifrons* (White, 1842) commonly known as kōura is a taonga (‘culturally treasured’) species for Māori, the indigenous people of Aotearoa and is valued as a food resource [@Kusabs2009]. Ecologically, kōura play a critical role in freshwater ecosystems as ecosystem engineers through their effects on sediment dynamics, nutrient cycling, and benthic community structure, and have been described as keystone species in many freshwater systems [@Collier1997; @Parkyn2001; @Usio2004]. Currently kōura are threatened by multiple interacting stressors, including climate change, water-quality degradation and invasive species, contributing to widespread population declines [@Lee2025; @Kusabsinrevision].
+In Aotearoa-New Zealand (hereafter Aotearoa), the endemic northern freshwater crayfish *Paranephrops planifrons* (White, 1842) commonly known as kōura is a taonga (‘culturally treasured’) species for Māori, the indigenous people of Aotearoa and is valued as a food resource [@Kusabs2009]. Ecologically, kōura play a critical role in freshwater ecosystems as ecosystem engineers through their effects on sediment dynamics, nutrient cycling, and benthic community structure, and have been described as keystone species in many freshwater systems [@Collier1997; @Parkyn2001; @Usio2004]. Currently kōura are threatened by multiple interacting stressors, including climate change, water-quality degradation and invasive species, contributing to widespread population declines [@Lee2025; @Kusabs2026].
 
 Kōura have a long co-evolutionary history with the native longfin eel (*Anguilla dieffenbachii*) (hereafter eel) and shortfin eel (*A. australis*) [@Brown2009; @MacNeil2025]. Reflecting this history, kōura respond more strongly to eel kairomones than to those of introduced non-native brown trout (*Salmo trutta*), even when sourced from streams where both predators were present, suggesting that co-evolutionary history, rather than individual experience alone, shaped kōura predator recognition [@Shave1994]. One of the invasive species that threatens kōura is the non-native brown bullhead catfish (*Ameiurus nebulosus*) (hereafter catfish) which was introduced to Aotearoa in 1877 and has since spread through many waterways on the North Island [@McDowall1990; @Barnes2003; @Dedual2019]. For example, a decade ago catfish were confirmed present in two large volcanic lakes, Lakes Rotoiti and Rotorua in the Bay of Plenty region, which also contain kōura [@Lee2025]. The catfish is highly tolerant of a wide range of environmental conditions [@Scott1973; @Lee2025] and, due to its broad gape and opportunistic feeding behaviour, is capable of consuming a wide variety of native aquatic organisms [@Scott1973; @Dedual2019]. In Aotearoa, which originally has no native fish remotely similar to a catfish the recent and ongoing spread of catfish into North Island waterways represents a truly novel predation threat to which kōura may lack adequate behavioural or sensory adaptations.
 
@@ -156,25 +160,28 @@ NCEs are not a single process but emerge from the interaction between sensory ec
 ## Conclusions
 As ecosystems become increasingly novel under global change, the reliability of historical predator–prey cues may decline, amplifying behavioural mismatches [@Sih2011]. This study provides experimental evidence that the invasive brown bullhead catfish exerts stronger NCEs on the native freshwater crayfish kōura than the co-evolved native longfin eel. The heightened refuge-seeking response to catfish likely reflects a generalised antipredator response triggered by unfamiliar chemical and visual cues, consistent with a fear generalisation framework. In contrast, the reduced response to eels suggests that co-evolutionary experience enables kōura to make more calibrated risk assessments. Comparative studies of kōura sourced from catfish-invaded versus catfish-free catchments would be worthwhile to assess whether repeated exposure over multiple generations has resulted in rapid evolution or behavioural plasticity in antipredator responses, and whether catfish-experienced kōura show more calibrated responses to catfish presence than naïve kōura. Such evolutionary dynamics could have important implications for predicting kōura persistence in catfish-invaded systems [@Sih2010]. From a management perspective, translocation of kōura from catfish-experienced source populations into catchments facing imminent catfish invasion may represent a more feasible strategy for seeding populations with individuals capable of more calibrated responses. Although we found no significant NCE of fish exudates on feeding behaviour, our study suggests further investigations of non-visual predator cues on kōura foraging behaviour is warranted. Because kōura are keystone species and ecosystem engineers, even a small increase in refuge use driven by catfish presence could have cascading effects on sediment dynamics, decomposition, and nutrient cycling in invaded lakes. As brown bullhead catfish continue to spread across Aotearoa’s rivers and lakes, management strategies aimed at protecting kōura should account for the behavioural cost of catfish NCEs alongside direct predation pressure as an underappreciated and ecologically significant dimension to this invasion.
 
-# Acknowledgements {.unnumbered}
-We thank Te Arawa Lakes Trust and Te Komiti Whakahaere for the opportunity to collect and study the treasured kōura. We are grateful to Soweeta Fort-D’ath and William Anaru (Te Arawa Lakes Trust), and Tihini Grant (Ngāti Pikiao). We also thank Nick Ling and Ben Roche (University of Waikato) for assisting with catfish and eel collection. This research was supported by the Fish Futures programme funded through a Ministry of Business, Innovation and Employment grant (CAWX2101).
+# Acknowledgements
+We thank Te Arawa Lakes Trust and Te Komiti Whakahaere for the opportunity to collect and study the treasured kōura. We are grateful to Soweeta Fort-D’ath and William Anaru (Te Arawa Lakes Trust), and Tihini Grant (Ngāti Pikiao). We also thank Nick Ling and Ben Roche (University of Waikato) for assisting with catfish and eel collection. 
 
-# Authors’ contributions {.unnumbered}
+## Funding statement
+This research was supported by the Fish Futures programme funded through a Ministry of Business, Innovation and Employment grant (CAWX2101).
+
+## Authors’ contributions
 Study conception and design were undertaken by O.V.R, C.M. and R.H. Experiments were executed by O.V.R. and C.M. Data analysis was performed by O.V.R. and F.L. Local ecological knowledge kōura were supplied by I.A.K.K. Manuscript drafting was led by O.V.R. and C.M. All authors contributed to manuscript revision, approved the results, and the final manuscript.
 
-# Ethical approval {.unnumbered}
+## Ethical approval
 This study received ethical approval by University of Waikato animal ethics committee, protocol number: 1232. Additional permission to conduct experiments with kōura was granted by Te Arawa Lakes Trust and Te Komiti Whakahaere.
 
-# Declarations {.unnumbered}
+## Declarations
 The corresponding author has declared that none of the authors has any competing interests.
 
-# Data availability statement {.unnumbered}
-The code and derived data supporting the findings of this study are openly available on GitHub (https://github.com/OlivierRaven/NCE_Koura_catfish)and a rendered version of the analysis is hosted at https://olivierraven.github.io/NCE_Koura_catfish/. The primary raw dataset is archived on Zenodo (https://doi.org/10.5281/zenodo.19716761). Peer review documents, including the cover letter and reviewer responses, are available in the manuscript repository in the interest of open and transparent science.
+## Data availability statement
+The code and derived data supporting the findings of this study are openly available on GitHub (https://github.com/OlivierRaven/Koura_Fear)and a rendered version of the analysis is hosted at https://olivierraven.github.io/Koura_Fear/. The primary raw dataset is archived on Zenodo (https://doi.org/10.5281/zenodo.19716761). Peer review documents, including the cover letter and reviewer responses, are available in the manuscript repository in the interest of open and transparent science.
 
-# Tables {.unnumbered}
+# Tables
 {{< embed analysis.qmd#tbl-emmeans-stratified >}}
 
-# Figures {.unnumbered}
+# Figures
 ![(a) Aquarium layout for kōura refuge seeking behaviour experiment. Each experimental round consisted of eight aquaria run simultaneously. Each tank contained a single kōura (K) and refuge (half terracotta plant pot) on one side of a mesh divider. On the other side was either a single catfish (C), eel (E) or a control with no fish. The mesh divider allowed visual and chemical cues while preventing direct physical contact between tank occupants. (b) Experiments were repeated in light and dark (red light), with photographs showing a catfish in the light regime (left) and and an eel in the dark regime (red light) (right) separated from kōura by mesh dividers.](images/setup_combined.png){#fig-aquarium-setup}
 
 ```{r}
@@ -204,7 +211,7 @@ knitr::include_graphics("outputs/fig-refuge-plot.png")
 knitr::include_graphics("outputs/fig-feeding-plot.png")
 ```
 
-# Supplementary information {.unnumbered}
+# Supplementary information
 {{< embed analysis.qmd#tbl-refuge-prop >}}
 
 {{< embed analysis.qmd#tbl-feeding-summary >}}
