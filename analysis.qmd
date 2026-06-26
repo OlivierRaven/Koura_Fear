@@ -64,33 +64,31 @@ base_theme_bw <- theme_classic() +
     panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.3))
 theme_set(base_theme_bw)
 
-# Format of p values in text
-format_pval <- function(p) {
-  if (p < 0.001) {
-    return("<0.001")
-  } else {
-    return(format(round(p, 3), nsmall = 3))
-  }
+# Format of p values in text, including the correct comparison operator and
+# the italic "p" label. Set label = FALSE for values chained after a leading
+# "*p*" (e.g. "*p* < 0.001, 0.011, 0.004, respectively").
+format_pval <- function(p, label = TRUE) {
+  out <- if (p < 0.001) "< 0.001" else paste0("= ", format(round(p, 3), nsmall = 3))
+  if (label) paste0("*p* ", out) else out
 }
 
 # Get treatment contrast
-get_treat_contrast <- function(condition, contrast) {
-  row <- emmeans_stratified %>% 
+get_treat_contrast <- function(condition, contrast, label = TRUE) {
+  row <- emmeans_stratified %>%
     filter(condition == !!condition, contrast == !!contrast)
-  
+
   if(nrow(row) == 0) {
     return("Contrast not found")
   }
-  
-  p <- format_pval(row$`p.value`[1])
-  p
+
+  format_pval(row$`p.value`[1], label = label)
 }
 
 # Get period contrast p-value
-get_period_contrast <- function(condition, contrast) {
-  row <- emmeans_stratified %>% 
+get_period_contrast <- function(condition, contrast, label = TRUE) {
+  row <- emmeans_stratified %>%
     filter(condition == !!condition, contrast == !!contrast)
-  format_pval(row$`p.value`)
+  format_pval(row$`p.value`, label = label)
 }
 
 # Get OCL correlation
@@ -105,13 +103,12 @@ get_ocl_corr <- function(treatment) {
     rs <- round(spearman_control$estimate, 2)
     p <- format_pval(spearman_control$p.value)
   }
-  paste0("rs = ", rs, ", p = ", p)
+  paste0("rs = ", rs, ", ", p)
 }
 
 # Get light overall effect
 get_light_effect <- function() {
-  p <- format_pval(summary(m_light_effect)$coefficients$cond["lightdark", "Pr(>|z|)"])
-  paste0("p = ", p)
+  format_pval(summary(m_light_effect)$coefficients$cond["lightdark", "Pr(>|z|)"])
 }
 
 ```

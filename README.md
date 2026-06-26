@@ -1,4 +1,4 @@
-# Fear of the invader: a predatory invader may provoke stronger non-consumptive effects on a keystone native prey than a native predator
+# Fear of the new: a predatory invader may provoke stronger non-consumptive effects on a keystone native prey than a native predator
 
 Olivier V. Raven | olivier.raven@icloud.com
 
@@ -33,9 +33,12 @@ light and dark conditions.
     +-- outputs/          # Exported figures and tables
     +-- manuscript/       # Manuscript Word document
     +-- images/           # Experimental setup photographs
+    +-- GoPro/             # Video footage from experimental trials
     +-- references/       # Bibliography (.bib) and citation style files
     +-- scripts/          # Miscellaneous/archived scripts
+    +-- docs/             # Rendered HTML output (GitHub Pages)
     +-- _quarto.yml       # Quarto project configuration
+    +-- deploy.R          # Post-render script that publishes docs/ to GitHub Pages
     +-- analysis.qmd      # Full statistical analysis notebook
     +-- index.qmd         # Manuscript
 
