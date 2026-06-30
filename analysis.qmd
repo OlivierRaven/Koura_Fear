@@ -217,31 +217,40 @@ get_prop <- function(l, t, p) {
 
 write.csv(refuge_table, file = file.path(out_dir, "tbl-refuge-prop.csv"), row.names = FALSE)
 
-if (knitr::is_html_output()) {
-  datatable(
-    refuge_table,
-    filter = "top",
-    options = list(
-      pageLength = 37,
-      dom = 'Bfrtip',
-      buttons = c('csv', 'excel'),
-      columnDefs = list(list(className = 'dt-center', targets = "_all"))
-    ),
-    extensions = 'Buttons',
-    rownames = FALSE,
-    colnames = c("Light", "Treatment", "Period", "N total", "N refuge", "Proportion in refuge")
-  ) |>
-    formatRound(columns = "prop_refuge", digits = 2) |>
-    formatStyle(
-      "prop_refuge",
-      background = styleColorBar(range(refuge_table$prop_refuge), "lightblue"),
-      backgroundSize = "100% 90%",
-      backgroundRepeat = "no-repeat",
-      backgroundPosition = "center"
-    )
-} else {
-  knitr::kable(refuge_table, digits = 2)
-}
+datatable(
+  refuge_table,
+  filter = "top",
+  options = list(
+    pageLength = 37,
+    dom = 'Bfrtip',
+    buttons = c('csv', 'excel'),
+    columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  ),
+  extensions = 'Buttons',
+  rownames = FALSE,
+  colnames = c("Light", "Treatment", "Period", "N total", "N refuge", "Proportion in refuge")
+) |>
+  formatRound(columns = "prop_refuge", digits = 2) |>
+  formatStyle(
+    "prop_refuge",
+    background = styleColorBar(range(refuge_table$prop_refuge), "lightblue"),
+    backgroundSize = "100% 90%",
+    backgroundRepeat = "no-repeat",
+    backgroundPosition = "center"
+  )
+
+```
+
+```{r}
+#| label: tbl-refuge-prop-static
+#| echo: false
+#| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."
+
+knitr::kable(
+  refuge_table,
+  digits = 2,
+  col.names = c("Light", "Treatment", "Period", "N total", "N refuge", "Proportion in refuge")
+)
 
 ```
 

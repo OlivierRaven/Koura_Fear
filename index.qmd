@@ -194,6 +194,13 @@ The code and derived data supporting the findings of this study are openly avail
 {{< embed analysis.qmd#fig-feeding-plot >}}
 
 # Supplementary information
+
+::: {.content-visible when-format="html"}
 {{< embed analysis.qmd#tbl-refuge-prop >}}
+:::
+
+::: {.content-visible unless-format="html"}
+{{< embed analysis.qmd#tbl-refuge-prop-static >}}
+:::
 
 {{< embed analysis.qmd#tbl-feeding-summary >}}
