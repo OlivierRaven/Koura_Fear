@@ -98,21 +98,27 @@ knitr:
 
 ::: {.content-visible when-format="pdf"}
 \thispagestyle{empty}
+\clearpage
+\thispagestyle{empty}
 \AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch2_cover.jpg}}}
 \null
 \newpage
+\thispagestyle{empty}
 \pagecolor{thesissand}
 \vspace{1cm}
 \begin{center}
 \textit{How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?}
 \end{center}
 \afterpage{\pagecolor{thesiscream}}
+\clearpage
 :::
 
 ::: {.content-visible unless-format="pdf"}
 ![](images/ch2_cover.jpg){fig-align="center" width="100%"}
 
 *How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
+
+{{< pagebreak >}}
 :::
 
 ```{r}
