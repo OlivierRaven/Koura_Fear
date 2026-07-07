@@ -10,7 +10,7 @@
   numbers=noendperiod]{scrartcl}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{5}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -261,7 +261,7 @@ invader.
 \end{center}
 \afterpage{\pagecolor{thesiscream}}
 
-\section{Introduction}\label{introduction}
+\subsection{Introduction}\label{introduction}
 
 Biological invasions can have profound impacts on invaded ecosystems,
 particularly through the introduction of novel predators that prey upon
@@ -382,9 +382,9 @@ underlying kōura vulnerability to invasive catfish, and how these
 responses may differ, and add to, those displayed in the presence of
 native predators such as eels.
 
-\section{Materials and Methods}\label{materials-and-methods}
+\subsection{Materials and Methods}\label{materials-and-methods}
 
-\subsection{Animal collection and
+\subsubsection{Animal collection and
 preparation}\label{animal-collection-and-preparation}
 
 In mid-August 2025, 92 kōura were sourced from two catfish-free lakes,
@@ -415,7 +415,7 @@ procedures were conducted under University of Waikato animal ethics
 committee approval (protocol number: 1232; see Ethical Approval
 section).
 
-\subsection{Refuge experiment}\label{refuge-experiment}
+\subsubsection{Refuge experiment}\label{refuge-experiment}
 
 Prior to the experiments all animals were individually weighed and
 measured. Only male kōura were used as male crustaceans are usually the
@@ -481,7 +481,7 @@ other treatments with the same size hand net. At the end of each
 experiment, the kōura was removed after the final 300-minute
 observation.
 
-\subsection{Feeding experiment}\label{feeding-experiment}
+\subsubsection{Feeding experiment}\label{feeding-experiment}
 
 Experiments were conducted in glass tanks (320 × 170 × 170 mm),
 containing 5 L dechlorinated tap water and a halved terracotta pot (90
@@ -510,7 +510,7 @@ each experiment was terminated, the number of pellets eaten (to the
 nearest quarter pellet) was counted and the feeding rate (pellets eaten
 per gram of wet weight (WW) of kōura) calculated.
 
-\subsection{Data analysis}\label{data-analysis}
+\subsubsection{Data analysis}\label{data-analysis}
 
 To analyse kōura refuge use, beta-binomial generalized linear
 mixed-effects models (GLMMs) were fitted using the glmmTMB package in R
@@ -564,9 +564,9 @@ non-parametric Kruskal-Wallis test was executed. Pairwise comparisons
 for starvation period were conducted using estimated marginal means with
 Sidak adjustment for multiple comparisons.
 
-\section{Results}\label{results}
+\subsection{Results}\label{results}
 
-\subsection{Refuge experiment}\label{refuge-experiment-1}
+\subsubsection{Refuge experiment}\label{refuge-experiment-1}
 
 The proportion of time kōura spent in refuge varied across treatments,
 experimental periods, and light conditions
@@ -612,7 +612,7 @@ treatment showed a modest and non-sustained increase (27\% to 41\%
 during `exposure', returning to 36\% `after'), and the control remained
 comparatively low throughout (37\% to 47\%).
 
-\subsection{Feeding experiment}\label{feeding-experiment-1}
+\subsubsection{Feeding experiment}\label{feeding-experiment-1}
 
 The linear mixed model showed that starvation period had a significant
 effect on kōura feeding rate (3 days: \emph{p} \textless{} 0.001; 4
@@ -629,7 +629,7 @@ feeding rate (pellets g WW⁻¹) for the control was over two and a half
 times that of the catfish and eel treatments (0.148 ± 0.035 compared to
 0.059 ± 0.039 and 0.052 ± 0.039 respectively).
 
-\section{Discussion}\label{discussion}
+\subsection{Discussion}\label{discussion}
 
 Prey modify their behaviour in response to predation risk, creating a
 `landscape of fear' that affects foraging, movement, and habitat use
@@ -656,7 +656,7 @@ over-avoiding response consistent with generalisation theory
 important implications for predicting the ecological impacts of invasive
 species.
 
-\subsection{Refuge use}\label{refuge-use}
+\subsubsection{Refuge use}\label{refuge-use}
 
 Under dark conditions, kōura demonstrated greater refuge-seeking
 behaviour when exposed to the novel catfish than to native eel. This
@@ -753,7 +753,7 @@ area where they perceived themselves as vulnerable in the confined tank
 space, rather than retreating to a refuge where they might be prone to a
 known predator.
 
-\subsection{Feeding behaviour}\label{feeding-behaviour}
+\subsubsection{Feeding behaviour}\label{feeding-behaviour}
 
 NCEs are not a single process but emerge from the interaction between
 sensory ecology and environmental context. The absence of a kairomone
@@ -817,7 +817,7 @@ using higher kairomone concentrations, longer starvation periods, and
 continuous feeding monitoring would help clarify whether non-visual
 predator cues generate NCEs on kōura foraging behaviour.
 
-\subsection{Conclusions}\label{conclusions}
+\subsubsection{Conclusions}\label{conclusions}
 
 As ecosystems become increasingly novel under global change, the
 reliability of historical predator--prey cues may decline, amplifying
@@ -861,7 +861,7 @@ account for the behavioural cost of catfish NCEs alongside direct
 predation pressure as an underappreciated and ecologically significant
 dimension to this invasion.
 
-\section{Acknowledgements}\label{acknowledgements}
+\subsection{Acknowledgements}\label{acknowledgements}
 
 We thank Te Arawa Lakes Trust and Te Komiti Whakahaere for the
 opportunity to collect and study the treasured kōura. We are grateful to
@@ -869,7 +869,7 @@ Soweeta Fort-D'ath and William Anaru (Te Arawa Lakes Trust), and Tihini
 Grant (Ngāti Pikiao). We also thank Nick Ling and Ben Roche (University
 of Waikato) for assisting with catfish and eel collection.
 
-\subsection{Funding statement}\label{funding-statement}
+\subsubsection{Funding statement}\label{funding-statement}
 
 This research was supported by the Fish Futures programme funded through
 a Ministry of Business, Innovation and Employment grant (CAWX2101) with
@@ -877,7 +877,7 @@ additional funding provided by the Bay of Plenty Regional Council under
 the Toihuarewa Waimāori - Bay of Plenty Regional Council Chair in Lake
 and Freshwater Science programme.
 
-\subsection{Authors' contributions}\label{authors-contributions}
+\subsubsection{Authors' contributions}\label{authors-contributions}
 
 Study conception and design were undertaken by O.V.R., C.M., and R.H.
 Experiments were executed by O.V.R. and C.M. Data analysis was performed
@@ -887,19 +887,19 @@ provided local ecological knowledge and kōura specimens. Manuscript
 drafting was led by O.V.R. All authors contributed to manuscript
 revision, approved the results, and agreed on the final manuscript.
 
-\subsection{Ethical approval}\label{ethical-approval}
+\subsubsection{Ethical approval}\label{ethical-approval}
 
 This study received ethical approval by University of Waikato animal
 ethics committee, protocol number: 1232. Additional permission to
 conduct experiments with kōura was granted by Te Arawa Lakes Trust and
 Te Komiti Whakahaere.
 
-\subsection{Declarations}\label{declarations}
+\subsubsection{Declarations}\label{declarations}
 
 The corresponding author has declared that none of the authors has any
 competing interests.
 
-\subsection{Data availability
+\subsubsection{Data availability
 statement}\label{data-availability-statement}
 
 The code and derived data supporting the findings of this study are
@@ -911,7 +911,7 @@ The primary raw dataset is archived on Zenodo
 including the cover letter and reviewer responses, are available in the
 manuscript repository in the interest of open and transparent science.
 
-\section{Tables}\label{tables}
+\subsection{Tables}\label{tables}
 
 {
 
@@ -976,7 +976,7 @@ Dark & during / after & 0.723 & 0.290 & Inf & 1 & -0.809 & 0.698 \\
 \href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/analysis-preview.html\#cell-tbl-emmeans-stratified}{Analysis
 Notebook}}
 
-\section{Figures}\label{figures}
+\subsection{Figures}\label{figures}
 
 \begin{figure}
 
@@ -1052,7 +1052,7 @@ eel, control) and starvation periods (0, 3, and 4 days).}
 
 \end{figure}%
 
-\section{Supplementary information}\label{supplementary-information}
+\subsection{Supplementary information}\label{supplementary-information}
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1364}}

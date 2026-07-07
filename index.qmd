@@ -110,7 +110,7 @@ knitr:
 :::
 
 ::: {.content-visible unless-format="pdf"}
-![](../images/ch2_cover.jpg){fig-align="center" width="100%"}
+![](images/ch2_cover.jpg){fig-align="center" width="100%"}
 
 *How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
 :::
@@ -120,12 +120,29 @@ knitr:
 #| include: false
 
 chapter_dir <- dirname(knitr::current_input(dir = TRUE))
+fig_labels <- c("fig-emmeans-stratified", "fig-refuge-plot", "fig-feeding-plot")
+out_dir <- file.path(chapter_dir, "outputs")
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+
+# Capture parent knitr env before any nested knitr calls
+parent_knit_env <- knitr::knit_global()
+
+# Always: purl analysis code and eval in parent env so inline R expressions work
+tmp_r <- tempfile(fileext = ".R")
 withr::with_dir(chapter_dir, {
-  knitr::knit("analysis.qmd", output = tempfile(), quiet = TRUE)
+  knitr::purl("analysis.qmd", output = tmp_r, quiet = TRUE, documentation = 0)
+  eval(parse(file = tmp_r), envir = parent_knit_env)
 })
-for (lbl in c("fig-emmeans-stratified", "fig-refuge-plot", "fig-feeding-plot")) {
-  src <- knitr::fig_chunk(lbl, "png")
-  if (file.exists(src)) file.copy(src, paste0("outputs/", lbl, ".png"), overwrite = TRUE)
+
+# Only if PNGs missing: run full knit to generate figure files
+if (!all(file.exists(file.path(out_dir, paste0(fig_labels, ".png"))))) {
+  withr::with_dir(chapter_dir, {
+    knitr::knit("analysis.qmd", output = tempfile(), quiet = TRUE, envir = parent_knit_env)
+  })
+  for (lbl in fig_labels) {
+    src <- knitr::fig_chunk(lbl, "png")
+    if (file.exists(src)) file.copy(src, file.path(out_dir, paste0(lbl, ".png")), overwrite = TRUE)
+  }
 }
 ```
 
