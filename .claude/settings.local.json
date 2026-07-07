@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(quarto render *)",
-      "PowerShell(Get-Command quarto -ErrorAction SilentlyContinue; Get-ChildItem \"C:\\\\Program Files\\\\Quarto\\\\bin\\\\quarto.exe\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\\\\Quarto\\\\bin\\\\quarto.exe\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:APPDATA\\\\quarto\" -ErrorAction SilentlyContinue)",
-      "Bash(Rscript -e \"quarto::quarto_render\\(\\)\")"
-    ]
-  }
-}

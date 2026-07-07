@@ -140,6 +140,18 @@
  
 
 
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage[pagewise]{lineno}
+\linenumbers
+
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{eso-pic}
+\definecolor{thesiscream}{RGB}{255, 252, 240}
+\definecolor{thesissand}{RGB}{232, 212, 162}
+\pagecolor{thesiscream}
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
@@ -203,7 +215,7 @@ non-consumptive effects on a keystone native prey than a native
 predator}
 \author{Olivier V. Raven \and Calum MacNeil \and Finnbar Lee \and Robin
 Holmes \and Ian A. Kusabs \and Francis J. Burdon \and Deniz Özkundakci}
-\date{2026-07-01}
+\date{2026-07-07}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -237,6 +249,17 @@ invader.
 \setcounter{tocdepth}{3}
 \tableofcontents
 }
+
+\thispagestyle{empty}
+\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch2_cover.jpg}}}
+\null
+\newpage
+\pagecolor{thesissand}
+\vspace{1cm}
+\begin{center}
+\textit{How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?}
+\end{center}
+\afterpage{\pagecolor{thesiscream}}
 
 \section{Introduction}\label{introduction}
 
@@ -290,13 +313,13 @@ behavior and evolutionary history shape kairomone detection.
 In Aotearoa-New Zealand (hereafter Aotearoa), the endemic northern
 freshwater crayfish \emph{Paranephrops planifrons} (White, 1842) is a
 keystone species impacted by non-native species. This crayfish species
-is commonly known as kōura and is a \emph{taonga} (`treasured') species
-for Māori, the indigenous people of Aotearoa, with strong cultural
-values as a food resource (\citeproc{ref-Kusabs2009}{Kusabs and Quinn
-2009}). Ecologically, kōura play a critical role as ecosystem engineers
-through their effects on sediment dynamics, nutrient cycling, and
-benthic community structure (\citeproc{ref-Collier1997}{Collier et al.
-1997}; \citeproc{ref-Parkyn2001}{Parkyn et al. 2001};
+is commonly known as kōura and is a taonga (culturally treasured)
+species for Māori, the indigenous people of Aotearoa, with strong
+cultural values as a food resource (\citeproc{ref-Kusabs2009}{Kusabs and
+Quinn 2009}). Ecologically, kōura play a critical role as ecosystem
+engineers through their effects on sediment dynamics, nutrient cycling,
+and benthic community structure (\citeproc{ref-Collier1997}{Collier et
+al. 1997}; \citeproc{ref-Parkyn2001}{Parkyn et al. 2001};
 \citeproc{ref-Usio2004}{Usio and Townsend 2004}). Currently, kōura are
 threatened by multiple stressors, including climate change,
 water-quality degradation and invasive species, contributing to
@@ -322,11 +345,11 @@ spread to multiple lakes and rivers in the North Island
 \citeproc{ref-Dedual2019}{Dedual 2019}). For example, in 2016/18, the
 presence of catfish was confirmed in two large volcanic lakes, Lakes
 Rotoiti and Rotorua in the Bay of Plenty region, which have historically
-contained large populations of kōura
-(\citeproc{ref-Francis_2019}{Francis 2019}; \citeproc{ref-Lee2025}{Lee
-et al. 2025}). Catfish are highly tolerant of a wide range of
-environmental conditions (\citeproc{ref-Scott1973}{Scott and Crossman
-1973}; \citeproc{ref-Lee2025}{Lee et al. 2025}) and their broad gape and
+contained large populations of kōura (\citeproc{ref-Francis2019}{Francis
+2019}; \citeproc{ref-Lee2025}{Lee et al. 2025}). Catfish are highly
+tolerant of a wide range of environmental conditions
+(\citeproc{ref-Scott1973}{Scott and Crossman 1973};
+\citeproc{ref-Lee2025}{Lee et al. 2025}) and their broad gape and
 opportunistic feeding behaviour enable the consumption of a wide variety
 of aquatic prey (\citeproc{ref-Scott1973}{Scott and Crossman 1973};
 \citeproc{ref-Dedual2019}{Dedual 2019}). Given Aotearoa lacks native
@@ -976,11 +999,11 @@ catfish in the light regime (left) and and an eel in the dark regime
 
 \end{figure}%
 
-\begin{figure}[H]
+\begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/analysis-fig-emmeans-stratified-output-1.png}}
+\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-emmeans-stratified.png}
 
 }
 
@@ -996,19 +1019,11 @@ kōura spend half their time in refuge.}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/analysis-preview.html\#cell-fig-emmeans-stratified}{Analysis
-Notebook}}
-
-\begin{verbatim}
-systemfonts and textshaping have been compiled with different versions of Freetype. Because of this, textshaping will not use the font cache provided by systemfonts
-\end{verbatim}
-
-\begin{figure}[H]
+\begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/analysis-fig-refuge-plot-output-2.png}}
+\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-refuge-plot.png}
 
 }
 
@@ -1023,15 +1038,11 @@ times.}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/analysis-preview.html\#cell-fig-refuge-plot}{Analysis
-Notebook}}
-
-\begin{figure}[H]
+\begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/analysis-fig-feeding-plot-output-2.png}}
+\includegraphics[width=5in,height=\textheight,keepaspectratio]{outputs/fig-feeding-plot.png}
 
 }
 
@@ -1041,31 +1052,37 @@ eel, control) and starvation periods (0, 3, and 4 days).}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/analysis-preview.html\#cell-fig-feeding-plot}{Analysis
-Notebook}}
-
 \section{Supplementary information}\label{supplementary-information}
 
-{
-
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1410}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1538}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1410}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1154}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1282}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2949}}@{}}
-
-\caption{\label{tbl-refuge-prop-static}Proportion of kōura observations
-recorded in refuge across experimental treatments (catfish, eel,
-control), light conditions (light, dark), and periods (before, during,
-and after predator exposure). Combined rows summarise across all levels
-of a given factor. Values represent the proportion of total observations
-where kōura were located in the refuge.}
-
-\tabularnewline
-
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1364}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1515}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1212}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3182}}@{}}
+\caption{Proportion of kōura observations recorded in refuge across
+experimental treatments (catfish, eel, control), light conditions
+(light, dark), and periods (before, during, and after predator
+exposure). Combined rows summarise across all levels of a given factor.
+Values represent the proportion of total observations where kōura were
+located in the refuge.}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Light
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Treatment
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Period
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+N total
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+N refuge
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Proportion in refuge
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Light
@@ -1121,14 +1138,7 @@ combined & combined & before & 384 & 147 & 0.38 \\
 combined & combined & during & 576 & 294 & 0.51 \\
 combined & combined & after & 384 & 230 & 0.60 \\
 combined & combined & combined & 1344 & 671 & 0.50 \\
-
 \end{longtable}
-
-}
-
-\textsubscript{Source:
-\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/index.qmd.html}{Article
-Notebook}}
 
 {
 
@@ -1186,8 +1196,9 @@ Nordic journal of freshwater research 68:55--62
 
 \bibitem[\citeproctext]{ref-Barnes2003}
 Barnes GE, Hicks BJ (2003) Brown bullhead catfish ({\emph{Ameiurus
-nebulosus}}) in {Lake Taupo} ({Managing Invasive Freshwater Fish in New
-Zealand}). Department of Conservation
+nebulosus}}) in {Lake Taupo}. In: Managing invasive freshwater fish in
+{New Zealand}: Proceedings of a workshop hosted by {Department of
+Conservation}, 10-12 may 2001, {Hamilton}. Department of Conservation
 
 \bibitem[\citeproctext]{ref-Beattie2018}
 Beattie MC, Moore PA (2018) Predator recognition of chemical cues in
@@ -1206,10 +1217,10 @@ Brönmark C, Hansson L-A (2012) Chemical ecology in aquatic systems.
 Oxford University Press
 
 \bibitem[\citeproctext]{ref-Brooks2017}
-Brooks E Mollie, Kristensen K, Benthem J Koen, et al (2017) {glmmTMB}
-balances speed and flexibility among packages for zero-inflated
-generalized linear mixed modeling. The R Journal 9:378.
-\url{https://doi.org/10.32614/rj-2017-066}
+Brooks M, Bolker B, Kristensen K, et al (2017)
+\href{https://doi.org/10.32614/cran.package.glmmtmb}{glmmTMB:
+Generalized linear mixed models using template model builder}. CRAN:
+Contributed Packages
 
 \bibitem[\citeproctext]{ref-Brown2004}
 Brown GE, Poirier J-F, Adrian JC (2004) Assessment of local predation
@@ -1221,7 +1232,7 @@ Behavioral Ecology 15:810--815.
 Brown LA (2009) \href{http://hdl.handle.net/10179/1168}{Habitat
 determinants and predatory interactions of the endemic freshwater
 crayfish (koura, {\emph{Paranephrops planifrons}}) in the lower {North
-Island}, {New Zealand}}. Massey University
+Island}, {New Zealand}}. Master's thesis, Massey University
 
 \bibitem[\citeproctext]{ref-Carthey2014}
 Carthey AJR, Banks PB (2014) Naïveté in novel ecological interactions:
@@ -1283,12 +1294,12 @@ and conspecific intruders varying by sex and reproductive status. Marine
 and Freshwater Behaviour and Physiology 38:237--248.
 \url{https://doi.org/10.1080/10236240500376477}
 
-\bibitem[\citeproctext]{ref-Francis_2019}
+\bibitem[\citeproctext]{ref-Francis2019}
 Francis LB (2019)
 \href{https://researchcommons.waikato.ac.nz/handle/10289/12746}{Evaluating
-the effects of invasive brown bullhead catfish (ameiurus nebulosus) on
-kōura (freshwater crayfish, paranephrops planifrons) in lake rotoiti}.
-Thesis, The University of Waikato
+the effects of invasive brown bullhead catfish ({\emph{Ameiurus
+nebulosus}}) on k{ō}ura (freshwater crayfish, {\emph{Paranephrops
+planifrons}}) in {Lake Rotoiti}}. Master's thesis, University of Waikato
 
 \bibitem[\citeproctext]{ref-Gherardi2011}
 Gherardi F, Mavuti KM, Pacini N, et al (2011) The smell of danger:
@@ -1380,7 +1391,7 @@ predation: A review and prospectus. Canadian Journal of Zoology
 \bibitem[\citeproctext]{ref-MacNeil2025}
 MacNeil C, Lee F, Kusabs I, Holmes R (2025) The biter bit; scavenging
 behaviour of native freshwater crayfish on the carrion of native and
-introduced fish predators in {Aotearoa-New Zealand}. Knowledge \&amp;
+introduced fish predators in {Aotearoa-New Zealand}. Knowledge \&
 Management of Aquatic Ecosystems 29.
 \url{https://doi.org/10.1051/kmae/2025022}
 
@@ -1422,8 +1433,9 @@ of intimidation and consumption in predator-prey interactions. Ecology
 86:501--509. \url{https://doi.org/10.1890/04-0719}
 
 \bibitem[\citeproctext]{ref-RCoreTeam2025}
-R Core Team (2025) \href{https://www.R-project.org/}{R: A language and
-environment for statistical computing}
+R Core Team (2025) \href{https://www.R-project.org/}{{R}: A language and
+environment for statistical computing}. R Foundation for Statistical
+Computing, Vienna, Austria
 
 \bibitem[\citeproctext]{ref-RambergPihl2020}
 Ramberg-Pihl NC, Yurewicz KL (2020) Behavioral responses of northern
