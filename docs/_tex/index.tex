@@ -140,6 +140,12 @@
  
 
 
+% Define chapter counter if document class doesn't have one (e.g. article)
+\ifdefined\thechapter\else
+  \newcounter{chapter}
+  \renewcommand*{\thechapter}{\arabic{chapter}}
+\fi
+
 \usepackage{setspace}
 \onehalfspacing
 
@@ -147,6 +153,7 @@
 \linenumbers
 
 \usepackage{xcolor}
+\usepackage{tikz}
 \usepackage{afterpage}
 \usepackage{eso-pic}
 \definecolor{thesiscream}{RGB}{255, 252, 240}
@@ -198,8 +205,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Fear of the new: a predatory invader provokes stronger non-consumptive effects on a keystone native prey than a native predator},
-  pdfauthor={Olivier V. Raven; Calum MacNeil; Finnbar Lee; Robin Holmes; Ian A. Kusabs; Francis J. Burdon; Deniz Özkundakci},
+  pdftitle={Native vs.~Novel Threats},
+  pdfauthor={Olivier V. Raven; Calum MacNeil; Finnbar Lee; Robin Holmes; Ian A. K. Kusabs; Francis J. Burdon; Deniz Özkundakci},
   pdfkeywords={Non-consumptive effects, Crayfish, Kōura, Brown bullhead
 catfish, Antipredator behaviour},
   colorlinks=true,
@@ -210,12 +217,20 @@ catfish, Antipredator behaviour},
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{Fear of the new: a predatory invader provokes stronger
+\title{Native vs.~Novel Threats}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Fear of the new: a predatory invader provokes stronger
 non-consumptive effects on a keystone native prey than a native
 predator}
 \author{Olivier V. Raven \and Calum MacNeil \and Finnbar Lee \and Robin
-Holmes \and Ian A. Kusabs \and Francis J. Burdon \and Deniz Özkundakci}
-\date{2026-07-08}
+Holmes \and Ian A. K. Kusabs \and Francis J. Burdon \and Deniz
+Özkundakci}
+\date{2026-07-10}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -250,20 +265,70 @@ invader.
 \tableofcontents
 }
 
+\ifcsname c@chapter\endcsname \setcounter{chapter}{2}
+
+\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}Native vs.\ Novel Threats}
+\fi
+\providecommand{\thechapter}{2}
 \thispagestyle{empty}
-\clearpage
-\thispagestyle{empty}
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch2_cover.jpg}}}
+\begin{tikzpicture}[remember picture, overlay]
+  \begin{scope}
+    \clip ([yshift=-7cm]current page.north west)
+          rectangle ([yshift=4.5cm]current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-7cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/ch2_cover.jpg}};
+  \end{scope}
+  \fill[black]
+    (current page.north west) rectangle ([yshift=-7cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.5cm]current page.north west)
+    {Chapter \thechapter};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-4cm]current page.north west)
+    {Native vs.\ Novel Threats};
+  \fill[black]
+    (current page.south west) rectangle ([yshift=4.5cm]current page.south east);
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{9}{13}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=3.2cm]current page.south west)
+    {Olivier V.\ Raven, Calum MacNeil, Finnbar Lee, Robin Holmes, Ian A. K.\ Kusabs, Francis J.\ Burdon \& Deniz Özkundakci};
+  \node[color=thesissand, text width=0.85\paperwidth, align=left,
+        font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
+    {Biological Invasions --- Under review};
+\end{tikzpicture}
 \null
-\newpage
-\thispagestyle{empty}
-\pagecolor{thesissand}
-\vspace{1cm}
-\begin{center}
-\textit{How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?}
-\end{center}
-\afterpage{\pagecolor{thesiscream}}
 \clearpage
+
+\subsection*{Abstract}\label{abstract}
+\addcontentsline{toc}{subsection}{Abstract}
+
+The non-consumptive effects (NCEs) of predators on prey result in costly
+antipredator behaviours, including increased refuge use and reduced
+foraging. NCEs significantly influence prey population dynamics,
+community interactions, and affect ecosystem functioning, particularly
+when the prey are keystone species. In Aotearoa-New Zealand, the native
+freshwater crayfish kōura (\emph{Paranephrops planifrons}) is a keystone
+species with an important functional role affecting sediment
+bioturbation, nutrient cycling, and benthic community structure. Kōura
+are preyed upon by multiple predators including native longfin eel
+(\emph{Anguilla dieffenbachii}) and invasive brown bullhead catfish
+(\emph{Ameiurus nebulosus}). Under laboratory conditions, we tested
+whether visual and chemical cues from these two predators induced
+different refuge-seeking and feeding behaviour responses by kōura.
+Predator presence produced in the dark a NCE on refuge use, with kōura
+exposed to catfish showing significantly greater refuge-seeking
+behaviour than those exposed to eels. This result is consistent with the
+generalisation theory triggered by unfamiliar predator cues rather than
+classic prey naivety. Our study indicates catfish incursions may provoke
+a greater NCE on kōura behaviours than resident eels. As catfish range
+expansion continues, these NCEs may represent an ecologically
+significant and underappreciated threat to kōura populations,
+compounding the direct predation pressure already documented for this
+invader.
 
 \subsection{Introduction}\label{introduction}
 

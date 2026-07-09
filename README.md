@@ -97,7 +97,7 @@ Te Komiti Whakahaere.
 
 ## Citation
 
-Raven, O.V., MacNeil, C., Lee, F., Holmes, R., Kusabs, I.A.,
+Raven, O.V., MacNeil, C., Lee, F., Holmes, R., Kusabs, I.A.K.,
 Burdon, F.J., & Özkundakci , D. (in review). Fear of the invader:
 a predatory invader may provoke stronger non-consumptive effects on
 a keystone native prey than a native predator.

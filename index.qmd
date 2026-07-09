@@ -1,5 +1,6 @@
 ---
-title: "Fear of the new: a predatory invader provokes stronger non-consumptive effects on a keystone native prey than a native predator"
+title: "Native vs. Novel Threats"
+subtitle: "Fear of the new: a predatory invader provokes stronger non-consumptive effects on a keystone native prey than a native predator"
 
 
 execute:
@@ -47,7 +48,7 @@ author:
         country: New Zealand
         
   - name: 
-      given: Ian A. 
+      given: Ian A. K.
       family: Kusabs
     orcid: 0000-0002-1473-7447
     affiliations:
@@ -91,47 +92,68 @@ funding: "This research was supported by the Fish Futures programme funded throu
 citation:
   container-title: "..."
 
+title-block-style: none
+
 knitr:
   opts_chunk:
     dev: "ragg_png"
 ---
 
 ::: {.content-visible when-format="pdf"}
+\ifcsname c@chapter\endcsname
+\setcounter{chapter}{2}
+\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}Native vs.\ Novel Threats}
+\fi
+\providecommand{\thechapter}{2}
 \thispagestyle{empty}
-\clearpage
-\thispagestyle{empty}
-\AddToShipoutPictureBG*{\AtPageUpperLeft{\includegraphics[width=\paperwidth,height=\paperheight]{images/ch2_cover.jpg}}}
+\begin{tikzpicture}[remember picture, overlay]
+  \begin{scope}
+    \clip ([yshift=-7cm]current page.north west)
+          rectangle ([yshift=4.5cm]current page.south east);
+    \node[inner sep=0pt, anchor=north]
+      at ([yshift=-7cm]current page.north)
+      {\includegraphics[width=\paperwidth]{images/ch2_cover.jpg}};
+  \end{scope}
+  \fill[black]
+    (current page.north west) rectangle ([yshift=-7cm]current page.north east);
+  \node[color=thesissand, align=left,
+        font=\fontsize{13}{16}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-1.5cm]current page.north west)
+    {Chapter \thechapter};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=-4cm]current page.north west)
+    {Native vs.\ Novel Threats};
+  \fill[black]
+    (current page.south west) rectangle ([yshift=4.5cm]current page.south east);
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{9}{13}\selectfont\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=3.2cm]current page.south west)
+    {Olivier V.\ Raven, Calum MacNeil, Finnbar Lee, Robin Holmes, Ian A. K.\ Kusabs, Francis J.\ Burdon \& Deniz Özkundakci};
+  \node[color=thesissand, text width=0.85\paperwidth, align=left,
+        font=\fontsize{9}{13}\selectfont\itshape\sffamily, anchor=west]
+    at ([xshift=1.5cm, yshift=1.5cm]current page.south west)
+    {Biological Invasions --- Under review};
+\end{tikzpicture}
 \null
-\newpage
-\thispagestyle{empty}
-\pagecolor{thesissand}
-\vspace{1cm}
-\begin{center}
-\textit{How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?}
-\end{center}
-\afterpage{\pagecolor{thesiscream}}
 \clearpage
-:::
-
-::: {.content-visible when-format="html"}
-![](images/ch2_cover.jpg){fig-align="center" width="100%"}
-
-*How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
 :::
 
 ::: {.content-visible when-format="docx"}
 ![](images/ch2_cover.jpg){fig-align="center" width=15cm}
 
-*How do native and non-native predators differentially influence antipredator behaviour and refuge use in kōura?*
+Olivier V. Raven, Calum MacNeil, Finnbar Lee, Robin Holmes, Ian A. Kusabs, Francis J. Burdon & Deniz Özkundakci
+
+*Biological Invasions* — Under review
 
 {{< pagebreak >}}
 :::
 
 ```{r}
-#| label: start
+#| label: start-ch2
 #| include: false
 
-chapter_dir <- dirname(knitr::current_input(dir = TRUE))
+chapter_dir <- if (basename(normalizePath(getwd())) == "02_koura_fear") normalizePath(getwd()) else normalizePath(file.path(getwd(), "02_koura_fear"))
 fig_labels <- c("fig-emmeans-stratified", "fig-refuge-plot", "fig-feeding-plot")
 out_dir <- file.path(chapter_dir, "outputs")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
@@ -139,24 +161,25 @@ dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 # Capture parent knitr env before any nested knitr calls
 parent_knit_env <- knitr::knit_global()
 
-# Always: purl analysis code and eval in parent env so inline R expressions work
 tmp_r <- tempfile(fileext = ".R")
-withr::with_dir(chapter_dir, {
-  knitr::purl("analysis.qmd", output = tmp_r, quiet = TRUE, documentation = 0)
-  eval(parse(file = tmp_r), envir = parent_knit_env)
-})
+knitr::purl(file.path(chapter_dir, "analysis.qmd"), output = tmp_r, quiet = TRUE, documentation = 0)
+.old_wd <- setwd(chapter_dir)
+eval(parse(file = tmp_r), envir = parent_knit_env)
+setwd(.old_wd)
 
-# Only if PNGs missing: run full knit to generate figure files
 if (!all(file.exists(file.path(out_dir, paste0(fig_labels, ".png"))))) {
-  withr::with_dir(chapter_dir, {
-    knitr::knit("analysis.qmd", output = tempfile(), quiet = TRUE, envir = parent_knit_env)
-  })
+  .old_wd <- setwd(chapter_dir)
+  knitr::knit(file.path(chapter_dir, "analysis.qmd"), output = tempfile(), quiet = TRUE, envir = parent_knit_env)
+  setwd(.old_wd)
   for (lbl in fig_labels) {
     src <- knitr::fig_chunk(lbl, "png")
     if (file.exists(src)) file.copy(src, file.path(out_dir, paste0(lbl, ".png")), overwrite = TRUE)
   }
 }
 ```
+
+## Abstract {.unnumbered}
+The non-consumptive effects (NCEs) of predators on prey result in costly antipredator behaviours, including increased refuge use and reduced foraging. NCEs significantly influence prey population dynamics, community interactions, and affect ecosystem functioning, particularly when the prey are keystone species. In Aotearoa-New Zealand, the native freshwater crayfish kōura (*Paranephrops planifrons*) is a keystone species with an important functional role affecting sediment bioturbation, nutrient cycling, and benthic community structure. Kōura are preyed upon by multiple predators including native longfin eel (*Anguilla dieffenbachii*) and invasive brown bullhead catfish (*Ameiurus nebulosus*). Under laboratory conditions, we tested whether visual and chemical cues from these two predators induced different refuge-seeking and feeding behaviour responses by kōura. Predator presence produced in the dark a NCE on refuge use, with kōura exposed to catfish showing significantly greater refuge-seeking behaviour than those exposed to eels. This result is consistent with the generalisation theory triggered by unfamiliar predator cues rather than classic prey naivety. Our study indicates catfish incursions may provoke a greater NCE on kōura behaviours than resident eels. As catfish range expansion continues, these NCEs may represent an ecologically significant and underappreciated threat to kōura populations, compounding the direct predation pressure already documented for this invader.
 
 ## Introduction
 Biological invasions can have profound impacts on invaded ecosystems, particularly through the introduction of novel predators that prey upon naïve native species lacking coevolved defence mechanisms [@Doherty2016]. Native prey may be naïve not just to a specific invader, but to entire functional groups of predators, making them especially vulnerable to direct predation when an invasion introduces a predator type entirely absent from their evolutionary history [@Sih2010; @Carthey2014]. In addition to these consumptive effects, native prey may exhibit heightened fear responses to invasive predators, leading to the development of anti-predator behaviours such as increased refuge use and avoidance of open habitats [@Kindlinger2017]. These behavioural changes, termed non-consumptive effects (NCEs), can substantially influence population dynamics by reducing foraging activity, growth, and reproductive output [@Preisser2005]. In contrast, native predators generally elicit different responses because prey and predators have coevolved, resulting in behavioural and physiological adaptations that stabilise predator–prey interactions [@Abrams2000].
@@ -216,6 +239,7 @@ As ecosystems become increasingly novel under global change, the reliability of 
 ## Acknowledgements
 We thank Te Arawa Lakes Trust and Te Komiti Whakahaere for the opportunity to collect and study the treasured kōura. We are grateful to Soweeta Fort-D’ath and William Anaru (Te Arawa Lakes Trust), and Tihini Grant (Ngāti Pikiao). We also thank Nick Ling and Ben Roche (University of Waikato) for assisting with catfish and eel collection. 
 
+::: {.chapter-only}
 ### Funding statement
 This research was supported by the Fish Futures programme funded through a Ministry of Business, Innovation and Employment grant (CAWX2101) with additional funding provided by the Bay of Plenty Regional Council under the Toihuarewa Waimāori - Bay of Plenty Regional Council Chair in Lake and Freshwater Science programme.
 
@@ -230,6 +254,7 @@ The corresponding author has declared that none of the authors has any competing
 
 ### Data availability statement
 The code and derived data supporting the findings of this study are openly available on GitHub (https://github.com/OlivierRaven/Koura_Fear)and a rendered version of the analysis is hosted at https://olivierraven.github.io/Koura_Fear/. The primary raw dataset is archived on Zenodo (https://doi.org/10.5281/zenodo.19716761). Peer review documents, including the cover letter and reviewer responses, are available in the manuscript repository in the interest of open and transparent science.
+:::
 
 ## Tables
 {{< embed analysis.qmd#tbl-emmeans-stratified >}}
