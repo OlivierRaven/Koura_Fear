@@ -230,7 +230,7 @@ predator}
 \author{Olivier V. Raven \and Calum MacNeil \and Finnbar Lee \and Robin
 Holmes \and Ian A. K. Kusabs \and Francis J. Burdon \and Deniz
 Özkundakci}
-\date{2026-07-10}
+\date{2026-07-13}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -265,9 +265,14 @@ invader.
 \tableofcontents
 }
 
-\ifcsname c@chapter\endcsname \setcounter{chapter}{2}
+\clearpage
+\providecommand{\chaptermark}[1]{}
 
-\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}Native vs.\ Novel Threats}
+\ifcsname c@chapter\endcsname \setcounter{chapter}{2}
+\setcounter{section}{0}
+
+\addcontentsline{toc}{chapter}{\protect\numberline{2}Native vs.\ Novel Threats}
+
 \fi
 \providecommand{\thechapter}{2}
 \thispagestyle{empty}
@@ -277,7 +282,7 @@ invader.
           rectangle ([yshift=4.5cm]current page.south east);
     \node[inner sep=0pt, anchor=north]
       at ([yshift=-7cm]current page.north)
-      {\includegraphics[width=\paperwidth]{images/ch2_cover.jpg}};
+      {\includegraphics[height=18.2cm]{images/ch2_cover.jpg}};
   \end{scope}
   \fill[black]
     (current page.north west) rectangle ([yshift=-7cm]current page.north east);
@@ -986,13 +991,13 @@ manuscript repository in the interest of open and transparent science.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1429}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2262}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1429}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0952}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2571}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1571}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0857}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0571}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0714}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0833}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1071}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1071}}@{}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}@{}}
 
 \caption{\label{tbl-emmeans-stratified}Pairwise contrasts for kōura
 refuge use in light and dark conditions. Results are shown separately
@@ -1042,7 +1047,7 @@ Dark & during / after & 0.723 & 0.290 & Inf & 1 & -0.809 & 0.698 \\
 }
 
 \textsubscript{Source:
-\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/analysis-preview.html\#cell-tbl-emmeans-stratified}{Analysis
+\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/index.qmd.html}{Article
 Notebook}}
 
 \subsection{Figures}\label{figures}
@@ -1123,6 +1128,8 @@ eel, control) and starvation periods (0, 3, and 4 days).}
 
 \subsection{Supplementary information}\label{supplementary-information}
 
+{
+
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1364}}
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1515}}
@@ -1130,28 +1137,16 @@ eel, control) and starvation periods (0, 3, and 4 days).}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1212}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1364}}
   >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3182}}@{}}
-\caption{Proportion of kōura observations recorded in refuge across
-experimental treatments (catfish, eel, control), light conditions
-(light, dark), and periods (before, during, and after predator
-exposure). Combined rows summarise across all levels of a given factor.
-Values represent the proportion of total observations where kōura were
-located in the refuge.}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Light
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Treatment
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Period
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-N total
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-N refuge
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Proportion in refuge
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
+
+\caption{\label{tbl-refuge-prop}Proportion of kōura observations
+recorded in refuge across experimental treatments (catfish, eel,
+control), light conditions (light, dark), and periods (before, during,
+and after predator exposure). Combined rows summarise across all levels
+of a given factor. Values represent the proportion of total observations
+where kōura were located in the refuge.}
+
+\tabularnewline
+
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Light
@@ -1207,7 +1202,14 @@ combined & combined & before & 384 & 147 & 0.38 \\
 combined & combined & during & 576 & 294 & 0.51 \\
 combined & combined & after & 384 & 230 & 0.60 \\
 combined & combined & combined & 1344 & 671 & 0.50 \\
+
 \end{longtable}
+
+}
+
+\textsubscript{Source:
+\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/index.qmd.html}{Article
+Notebook}}
 
 {
 
@@ -1235,7 +1237,7 @@ day\_starve4 & 0.067 & 0.033 & 43 & 2.056 & 0.046 \\
 }
 
 \textsubscript{Source:
-\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/analysis-preview.html\#cell-tbl-feeding-summary}{Analysis
+\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/index.qmd.html}{Article
 Notebook}}
 
 \protect\phantomsection\label{refs}
