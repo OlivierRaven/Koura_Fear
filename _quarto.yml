@@ -2,6 +2,10 @@ project:
   type: manuscript
   output-dir: docs
   post-render: deploy.R
+  render:
+    - "index.qmd"
+    - "analysis.qmd"
+    - "supplementary.qmd"
 
 execute:
   freeze: false
@@ -16,6 +20,8 @@ manuscript:
   notebooks:
     - notebook: analysis.qmd
       title: "Analysis Notebook"
+    - notebook: supplementary.qmd
+      title: "Supplementary Information"
 
 format:
   html:

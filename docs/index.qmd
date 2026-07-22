@@ -315,5 +315,5 @@ knitr::kable(
 ::: {.supplementary}
 ## Supplementary information
 
-*Supplementary tables are provided in the thesis appendices. For standalone access, render* `supplementary.qmd` *in this chapter's folder.*
+*Supplementary tables are provided in the appendices.*
 :::
