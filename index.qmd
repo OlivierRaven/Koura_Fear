@@ -193,6 +193,7 @@ writeLines(r_lines, tmp_r)
 eval(parse(file = tmp_r, encoding = "UTF-8"))
 unlink(tmp_r)
 out_dir <- file.path(chapter_dir, "outputs")
+ch2_out_dir <- out_dir  # saved so appendices can find it after later chapters overwrite out_dir
 
 if (!all(file.exists(file.path(out_dir, paste0(fig_labels, ".png"))))) {
   .old_wd <- setwd(chapter_dir)
@@ -314,5 +315,5 @@ knitr::kable(
 ::: {.supplementary}
 ## Supplementary information
 
-*Supplementary tables are provided in the appendices.*
+*Supplementary tables are provided in the thesis appendices. For standalone access, render* `supplementary.qmd` *in this chapter's folder.*
 :::

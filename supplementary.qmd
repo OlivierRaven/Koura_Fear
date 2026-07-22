@@ -1,10 +1,16 @@
 ## Chapter 2 — Supplementary information {.unnumbered}
 
 ```{r}
+#| label: setup-ch2-supp
+#| include: false
+.ch2_out <- if (exists("ch2_out_dir")) ch2_out_dir else file.path(normalizePath("."), "outputs")
+```
+
+```{r}
 #| label: tbl-refuge-prop
 #| echo: false
 #| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."
-refuge_tbl <- read.csv(file.path(out_dir, "tbl-refuge-prop.csv"))
+refuge_tbl <- read.csv(file.path(.ch2_out, "tbl-refuge-prop.csv"))
 col_nms    <- c("Light", "Treatment", "Period", "N total", "N refuge", "Proportion in refuge")
 if (knitr::is_latex_output()) {
   knitr::kable(refuge_tbl, digits = 2, col.names = col_nms)
@@ -20,7 +26,7 @@ if (knitr::is_latex_output()) {
 #| label: tbl-feeding-summary
 #| echo: false
 #| tbl-cap: "Fixed effects from the linear mixed model of kōura feeding rate (pellets consumed per gram body weight). Starvation period included as fixed effect with tank as random intercept."
-feed_tbl  <- read.csv(file.path(out_dir, "tbl-feeding-summary.csv"))
+feed_tbl  <- read.csv(file.path(.ch2_out, "tbl-feeding-summary.csv"))
 col_nms_f <- c("Term", "Estimate", "Std. Error", "df", "t value", "p value")
 if (knitr::is_latex_output()) {
   knitr::kable(feed_tbl, col.names = col_nms_f, digits = 3)
