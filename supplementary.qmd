@@ -1,0 +1,33 @@
+## Chapter 2 — Supplementary information {.unnumbered}
+
+```{r}
+#| label: tbl-refuge-prop
+#| echo: false
+#| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."
+refuge_tbl <- read.csv(file.path(out_dir, "tbl-refuge-prop.csv"))
+col_nms    <- c("Light", "Treatment", "Period", "N total", "N refuge", "Proportion in refuge")
+if (knitr::is_latex_output()) {
+  knitr::kable(refuge_tbl, digits = 2, col.names = col_nms)
+} else {
+  DT::datatable(refuge_tbl, colnames = col_nms, filter = "top", rownames = FALSE,
+                options = list(pageLength = 15, dom = 'Bfrtip', buttons = c('csv', 'excel')),
+                extensions = 'Buttons') |>
+    DT::formatRound(columns = "prop_refuge", digits = 2)
+}
+```
+
+```{r}
+#| label: tbl-feeding-summary
+#| echo: false
+#| tbl-cap: "Fixed effects from the linear mixed model of kōura feeding rate (pellets consumed per gram body weight). Starvation period included as fixed effect with tank as random intercept."
+feed_tbl  <- read.csv(file.path(out_dir, "tbl-feeding-summary.csv"))
+col_nms_f <- c("Term", "Estimate", "Std. Error", "df", "t value", "p value")
+if (knitr::is_latex_output()) {
+  knitr::kable(feed_tbl, col.names = col_nms_f, digits = 3)
+} else {
+  DT::datatable(feed_tbl, colnames = col_nms_f, filter = "top", rownames = FALSE,
+                options = list(pageLength = 15, dom = 'Bfrtip', buttons = c('csv', 'excel')),
+                extensions = 'Buttons') |>
+    DT::formatRound(columns = c("Estimate", "Std..Error", "t.value", "p.value"), digits = 3)
+}
+```

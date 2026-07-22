@@ -76,10 +76,8 @@ author:
         address: Private Bag 3105, Hamilton 3240
         country: New Zealand
 
-date: today
+date: "today"
 
-abstract: The non-consumptive effects (NCEs) of predators on prey result in costly antipredator behaviours, including increased refuge use and reduced foraging. NCEs significantly influence prey population dynamics, community interactions, and affect ecosystem functioning, particularly when the prey are keystone species. In Aotearoa-New Zealand, the native freshwater crayfish kōura (*Paranephrops planifrons*) is a keystone species with an important functional role affecting sediment bioturbation, nutrient cycling, and benthic community structure. Kōura are preyed upon by multiple predators including native longfin eel (*Anguilla dieffenbachii*) and invasive brown bullhead catfish (*Ameiurus nebulosus*). Under laboratory conditions, we tested whether visual and chemical cues from these two predators induced different refuge-seeking and feeding behaviour responses by kōura. Predator presence produced in the dark a NCE on refuge use, with kōura exposed to catfish showing significantly greater refuge-seeking behaviour than those exposed to eels. This result is consistent with the generalisation theory triggered by unfamiliar predator cues rather than classic prey naivety. Our study indicates catfish incursions may provoke a greater NCE on kōura behaviours than resident eels. As catfish range expansion continues, these NCEs may represent an ecologically significant and underappreciated threat to kōura populations, compounding the direct predation pressure already documented for this invader.
- 
 keywords:
   - Non-consumptive effects
   - Crayfish
@@ -99,7 +97,7 @@ knitr:
     dev: "ragg_png"
 ---
 
-::: {.content-visible when-format="pdf"}
+```{=latex}
 \clearpage
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
@@ -128,6 +126,10 @@ knitr:
         font=\fontsize{22}{28}\selectfont\bfseries\sffamily, anchor=west]
     at ([xshift=1.5cm, yshift=-4cm]current page.north west)
     {Native vs.\ Novel Threats};
+  \node[color=white, text width=0.85\paperwidth, align=left,
+        font=\fontsize{10}{13}\selectfont\itshape\sffamily, anchor=north west]
+    at ([xshift=1.5cm, yshift=-5.0cm]current page.north west)
+    {Fear of the new: a predatory invader provokes stronger non-consumptive effects on a keystone native prey than a native predator};
   \fill[black]
     (current page.south west) rectangle ([yshift=4.5cm]current page.south east);
   \node[color=white, text width=0.85\paperwidth, align=left,
@@ -141,12 +143,15 @@ knitr:
 \end{tikzpicture}
 \null
 \clearpage
-:::
+```
 
 ::: {.content-visible when-format="docx"}
+Chapter 2 Native vs. Novel Threats
+Fear of the new: a predatory invader provokes stronger non-consumptive effects on a keystone native prey than a native predator
+
 ![](images/ch2_cover.jpg){fig-align="center" width=15cm}
 
-Olivier V. Raven, Calum MacNeil, Finnbar Lee, Robin Holmes, Ian A. Kusabs, Francis J. Burdon & Deniz Özkundakci
+Olivier V. Raven, Calum MacNeil, Finnbar Lee, Robin Holmes, Ian A. K. Kusabs, Francis J. Burdon & Deniz Özkundakci
 
 *Biological Invasions* — Under review
 
@@ -223,7 +228,7 @@ In this study, we used controlled laboratory experiments to test whether the pre
 
 ## Materials and Methods
 ### Animal collection and preparation
-In mid-August 2025, 92 kōura were sourced from two catfish-free lakes, Ōkāreka and Tikitapu, within the Rotorua Te Arawa Lakes area in the North Island of Aotearoa. Eels are rare or absent in these lakes [@Martin2007], potentially limiting the recent coevolutionary history with local kōura populations. However, eels are a native predator that has a long record of coexistence with kōura in Aotearoa [@McDowall1990; @Feldmann1994; @Kaulfuss2018]. In this study our focus was on the macroevolutionary implications of the native predator compared to a novel invader, regardless of the local coevolutionary history. In late September 2025, catfish and eels were sourced from Lake Rotoroa in Hamilton in the Waikato region of the North Island. Experiments were conducted at the Aquatic Research Centre of the University of Waikato. All three species were held separately in holding tanks and acclimated for a week in the laboratory conditions. These included a 10:14 light:dark cycle reflecting the seasonal day-length and dechlorinated tap water with stable temperatures (15.6 °C), pH (8.4) and dissolved oxygen concentrations (10 mg l⁻¹). These parameters reflect typical physiochemical conditions in the source lakes. Kōura and fish were fed every other day with commercial carnivore pellets (Hikari Tropical, Kyorin Food Industries Ltd., Japan; animal protein 47 %). Because kōura are a taonga (treasured) species, permission was obtained from Te Arawa Lakes Trust and Te Komiti Whakahaere. All experimental procedures were conducted under University of Waikato animal ethics committee approval (protocol number: 1232; see Ethical Approval section).
+In mid-August 2025, 92 kōura were sourced from two catfish-free lakes, Ōkāreka and Tikitapu, within the Rotorua Te Arawa Lakes area in the North Island of Aotearoa. Eels are rare or absent in these lakes [@Martin2007], potentially limiting the recent coevolutionary history with local kōura populations. However, eels are a native predator that has a long record of coexistence with kōura in Aotearoa [@McDowall1990; @Feldmann1994; @Kaulfuss2018]. In this study our focus was on the macroevolutionary implications of the native predator compared to a novel invader, regardless of the local coevolutionary history. In late September 2025, catfish and eels were sourced from Lake Rotoroa in Hamilton in the Waikato region of the North Island. Experiments were conducted at the Aquatic Research Centre of the University of Waikato. All three species were held separately in holding tanks and acclimated for a week in the laboratory conditions. These included a 10:14 light:dark cycle reflecting the seasonal day-length and dechlorinated tap water with stable temperatures (15.6 °C), pH (8.4) and dissolved oxygen concentrations (10 mg l$^{-1}$). These parameters reflect typical physiochemical conditions in the source lakes. Kōura and fish were fed every other day with commercial carnivore pellets (Hikari Tropical, Kyorin Food Industries Ltd., Japan; animal protein 47 %). Because kōura are a taonga (treasured) species, permission was obtained from Te Arawa Lakes Trust and Te Komiti Whakahaere. All experimental procedures were conducted under University of Waikato animal ethics committee approval (protocol number: 1232; see Ethical Approval section).
 
 ### Refuge experiment
 Prior to the experiments all animals were individually weighed and measured. Only male kōura were used as male crustaceans are usually the most bold and aggressive [@Stein1976; @Figler2005] and restricting test animals to a single sex allowed a smaller overall number of kōura to be used. Kōura had a mean (± SD) orbital carapace length (OCL) of 26.0 mm (± 3.08) (18.35-32.95 mm range) and a mean (± SD) wet weight of 11.7 g (± 4.25) (3–23 g range). Catfish ranged in length from 260-267 mm and 2.34–3.16 kg wet weight and eels ranged in wet weight from 2.50-3.52 kg, with both these size ranges being able to consume adult kōura [@Hicks1997; @Barnes2003; @Ryan2009].
@@ -247,7 +252,7 @@ The proportion of time kōura spent in refuge varied across treatments, experime
 For all treatments individual kōura were highly variable in their movement around tanks and use of refuges, even in the time intervals comprising the first 60 minutes of the experiment, before fish were introduced. The coefficient of variations (CVs) for kōura refuge use in the light and the dark before fish introduction were similarly high, being 60.4 % and 58.2 % (both n = 32) respectively, confirming high baseline variation in kōura refuge use, regardless of treatment type. Despite this inherent variation in individual kōura behaviour, clear patterns in kōura refuge use were evident over the course of the experiment (@fig-refuge-plot). Under light conditions, the control showed the largest overall increase in refuge use (`r get_prop("light","control","before")`% to `r get_prop("light","control","after")`%), driven primarily by a sharp rise in the 'after' period, while the catfish treatment showed a more sustained increase across all periods (`r get_prop("light","catfish","before")`% to `r get_prop("light","catfish","after")`%) and the eel treatment the smallest increase (`r get_prop("light","eel","before")`% to `r get_prop("light","eel","after")`%). Under dark conditions, the pattern shifted, with the catfish treatment showing the greatest increase (`r get_prop("dark","catfish","before")`% to `r get_prop("dark","catfish","after")`%), while the eel treatment showed a modest and non-sustained increase (`r get_prop("dark","eel","before")`% to `r get_prop("dark","eel","during")`% during 'exposure', returning to `r get_prop("dark","eel","after")`% 'after'), and the control remained comparatively low throughout (`r get_prop("dark","control","before")`% to `r get_prop("dark","control","after")`%).
 
 ### Feeding experiment
-The linear mixed model showed that starvation period had a significant effect on kōura feeding rate (3 days: `r format_pval(p_day_starve3)`; 4 days: `r format_pval(p_day_starve4)`; @fig-feeding-plot; @tbl-feeding-summary). Treatment was not included in the main model following model selection. Stratified analyses revealed no significant treatment effects across starvation periods. Although residuals at day 0 violated normality (Shapiro-Wilk *p* = `r sw_day0_p`), the non-parametric Kruskal-Wallis test confirmed no treatment effect (*p* = `r kw_day0_p`). Starvation days 3 and 4 met normality assumptions and showed no significant treatment effects (*p* = `r p_day3_treat` and `r p_day4_treat` respectively). After 4 days starvation, the mean (±SE) kōura feeding rate (pellets g WW⁻¹) for the control was over two and a half times that of the catfish and eel treatments (`r get_feed_mean_se("control")` compared to `r get_feed_mean_se("catfish")` and `r get_feed_mean_se("eel")` respectively).
+The linear mixed model showed that starvation period had a significant effect on kōura feeding rate (3 days: `r format_pval(p_day_starve3)`; 4 days: `r format_pval(p_day_starve4)`; @fig-feeding-plot; @tbl-feeding-summary). Treatment was not included in the main model following model selection. Stratified analyses revealed no significant treatment effects across starvation periods. Although residuals at day 0 violated normality (Shapiro-Wilk *p* = `r sw_day0_p`), the non-parametric Kruskal-Wallis test confirmed no treatment effect (*p* = `r kw_day0_p`). Starvation days 3 and 4 met normality assumptions and showed no significant treatment effects (*p* = `r p_day3_treat` and `r p_day4_treat` respectively). After 4 days starvation, the mean (±SE) kōura feeding rate (pellets g WW$^{-1}$) for the control was over two and a half times that of the catfish and eel treatments (`r get_feed_mean_se("control")` compared to `r get_feed_mean_se("catfish")` and `r get_feed_mean_se("eel")` respectively).
 
 ## Discussion
 Prey modify their behaviour in response to predation risk, creating a 'landscape of fear' that affects foraging, movement, and habitat use independently of actual predation events [@Laundre2001]. Our study adds to a growing body of literature (i.e., [@Sniegula2025]) showing invasive predators can generate stronger NCEs on native prey than native predators, with potentially far-reaching consequences on invaded ecosystems. The results in our experiments suggest the introduction of a novel predator may change the prey's fear landscape in ways that a native predator does not. Kōura are a keystone species that act as ecosystem engineers in Aotearoa freshwaters, meaning that predator-induced changed in kōura behaviour may indirectly affect ecosystem-level properties (e.g., resources or other species) through non-consumptive pathways [@Peacor2001]. Such indirect effects represent a form of behavioural trophic cascade [@Schmitz1997], whereby predator presence alone drives ecosystem-level change. Our results also highlight that prey naivety does not necessarily manifest as a failure to respond to novel predators. Instead, naïve prey may exhibit an over-avoiding response consistent with generalisation theory [@Sih2010; @Ehlman2019], which potentially has important implications for predicting the ecological impacts of invasive species.
@@ -306,26 +311,8 @@ knitr::kable(
 
 ![Mean (±SE) kōura feeding rate (pellets consumed per gram wet weight kōura) across predator treatments (catfish, eel, control) and starvation periods (0, 3, and 4 days).](outputs/fig-feeding-plot.png){#fig-feeding-plot width=5in}
 
+::: {.supplementary}
 ## Supplementary information
 
-```{r}
-#| label: tbl-refuge-prop
-#| echo: false
-#| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."
-knitr::kable(
-  read.csv(file.path(out_dir, "tbl-refuge-prop.csv")),
-  digits = 2,
-  col.names = c("Light", "Treatment", "Period", "N total", "N refuge", "Proportion in refuge")
-)
-```
-
-```{r}
-#| label: tbl-feeding-summary
-#| echo: false
-#| tbl-cap: "Fixed effects from the linear mixed model of kōura feeding rate (pellets consumed per gram body weight). Starvation period included as fixed effect with tank as random intercept."
-knitr::kable(
-  read.csv(file.path(out_dir, "tbl-feeding-summary.csv")),
-  col.names = c("Term", "Estimate", "Std. Error", "df", "t value", "p value"),
-  digits = 3
-)
-```
+*Supplementary tables are provided in the appendices.*
+:::
