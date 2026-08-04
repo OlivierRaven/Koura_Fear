@@ -159,7 +159,7 @@ Olivier V. Raven, Calum MacNeil, Finnbar Lee, Robin Holmes, Ian A. K. Kusabs, Fr
 :::
 
 ::: {.content-visible when-format="html"}
-# Native vs. Novel Threats {.unnumbered}
+# Chapter 2 Native vs. Novel Threats {.unnumbered}
 :::
 
 ```{r}
