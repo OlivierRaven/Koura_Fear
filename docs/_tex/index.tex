@@ -204,11 +204,16 @@
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
 \hypersetup{
   pdftitle={Native vs.~Novel Threats},
   pdfauthor={Olivier V. Raven; Calum MacNeil; Finnbar Lee; Robin Holmes; Ian A. K. Kusabs; Francis J. Burdon; Deniz Özkundakci},
-  pdfkeywords={Non-consumptive effects, Crayfish, Kōura, Brown bullhead
-catfish, Antipredator behaviour},
+  pdfkeywords={\xmpquote{Non-consumptive
+effects}, \xmpquote{Crayfish}, \xmpquote{Kōura}, \xmpquote{Brown
+bullhead catfish}, \xmpquote{Antipredator behaviour}},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -230,7 +235,7 @@ predator}
 \author{Olivier V. Raven \and Calum MacNeil \and Finnbar Lee \and Robin
 Holmes \and Ian A. K. Kusabs \and Francis J. Burdon \and Deniz
 Özkundakci}
-\date{2026-08-04}
+\date{2026-08-17}
 \begin{document}
 \maketitle
 
@@ -354,8 +359,8 @@ awareness of potential risk (\citeproc{ref-Nystrom2005}{Nyström 2005}).
 However, the strength of these responses depends on prior experience as
 wild-caught individual crayfish show stronger antipredator responses
 than farmed conspecifics naïve to predators
-(\citeproc{ref-Martin2014}{Martin 2014}), indicating that both learned
-behavior and evolutionary history shape kairomone detection.
+(\citeproc{ref-Martin2014}{Martin 2014}), indicating that both learnt
+behaviour and evolutionary history shape kairomone detection.
 
 In Aotearoa-New Zealand (hereafter Aotearoa), the endemic northern
 freshwater crayfish \emph{Paranephrops planifrons} (White, 1842) is a
@@ -500,7 +505,7 @@ experimental rounds. The experiment was conducted across eight rounds
 and four separate rounds with different kōura under dark conditions
 (\textasciitilde70 lux, n = 32 kōura: 11 catfish, 11 eel, 10 control).
 Observations were made in the dark using red lighting positioned
-centrally above the tanks to minimize disturbance, as many aquatic
+centrally above the tanks to minimise disturbance, as many aquatic
 species have limited sensitivity to red wavelengths and are unlikely to
 perceive this part of the spectrum. Following each individual
 experimental run, each tank was thoroughly cleaned and refilled with
@@ -508,6 +513,27 @@ dechlorinated tap water before reuse. Each individual kōura was only
 exposed once to a fish predator and there were no mortalities of kōura
 or fish during experiments. All experiments were conducted within a
 three-week period during October 2025.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{images/setup_combined.png}}
+
+}
+
+\caption{\label{fig-aquarium-setup}(a) Aquarium layout for kōura refuge
+seeking behaviour experiment. Each experimental round consisted of eight
+aquaria run simultaneously. Each tank contained a single kōura (K) and
+refuge (half terracotta plant pot) on one side of a mesh divider. On the
+other side was either a single catfish (C), eel (E) or a control with no
+fish. The mesh divider allowed visual and chemical cues while preventing
+direct physical contact between tank occupants. (b) Experiments were
+repeated in light and dark (red light), with photographs showing a
+catfish in the light regime (left) and and an eel in the dark regime
+(red light) (right) separated from kōura by mesh dividers.}
+
+\end{figure}%
 
 At the beginning of each experiment, an individual kōura was placed in
 the middle of the tank compartment containing the refuge. Kōura location
@@ -639,6 +665,89 @@ kōura OCL and refuge use in any of the three treatments (rs = -0.09,
 \emph{p} = 0.693, rs = 0.09, \emph{p} = 0.680 and rs = 0.16, \emph{p} =
 0.494 for catfish, eel and control treatments respectively, all NS).
 
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-emmeans-stratified.png}
+
+}
+
+\caption{\label{fig-emmeans-stratified}Predicted marginal probabilities
+of refuge use by treatment and experimental period in light and dark
+conditions. Results are shown separately for light (top) and dark
+(bottom) conditions, each fitted with a beta-binomial GLMM. Points
+represent model-estimated marginal means with 95\% confidence intervals
+shown as error bars. Different letters (a, b) indicate statistically
+significant differences based on Tukey-adjusted pairwise comparisons
+within each factor. The dashed line at 0.5 marks the threshold where
+kōura spend half their time in refuge.}
+
+\end{figure}%
+
+{
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2571}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1571}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0857}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0571}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0714}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}@{}}
+
+\caption{\label{tbl-emmeans-stratified}Pairwise contrasts for kōura
+refuge use in light and dark conditions. Results are shown separately
+for each light condition from beta-binomial GLMMs. Odds ratios and
+p-values are shown for treatment and period comparisons. P-values are
+Sidak-adjusted for multiple comparisons within each factor.}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Contrast
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Odds ratio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+SE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Null
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+z value
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p value
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Light & control / catfish & 0.863 & 0.396 & Inf & 1 & -0.322 & 0.944 \\
+Light & control / eel & 1.641 & 0.734 & Inf & 1 & 1.108 & 0.509 \\
+Light & catfish / eel & 1.903 & 0.866 & Inf & 1 & 1.414 & 0.333 \\
+Light & before / during & 0.463 & 0.194 & Inf & 1 & -1.836 & 0.158 \\
+Light & before / after & 0.297 & 0.135 & Inf & 1 & -2.672 & 0.021 \\
+Light & during / after & 0.641 & 0.294 & Inf & 1 & -0.969 & 0.597 \\
+Dark & control / catfish & 0.393 & 0.172 & Inf & 1 & -2.133 & 0.083 \\
+Dark & control / eel & 1.542 & 0.655 & Inf & 1 & 1.019 & 0.565 \\
+Dark & catfish / eel & 3.924 & 1.693 & Inf & 1 & 3.170 & 0.004 \\
+Dark & before / during & 0.728 & 0.286 & Inf & 1 & -0.807 & 0.698 \\
+Dark & before / after & 0.527 & 0.215 & Inf & 1 & -1.569 & 0.259 \\
+Dark & during / after & 0.723 & 0.290 & Inf & 1 & -0.809 & 0.698 \\
+
+\end{longtable}
+
+}
+
+\textsubscript{Source:
+\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/index.qmd.html}{Article
+Notebook}}
+
 For all treatments individual kōura were highly variable in their
 movement around tanks and use of refuges, even in the time intervals
 comprising the first 60 minutes of the experiment, before fish were
@@ -648,33 +757,66 @@ being 60.4 \% and 58.2 \% (both n = 32) respectively, confirming high
 baseline variation in kōura refuge use, regardless of treatment type.
 Despite this inherent variation in individual kōura behaviour, clear
 patterns in kōura refuge use were evident over the course of the
-experiment (Figure~\ref{fig-refuge-plot}; {(Table S1)}). Under light
-conditions, the control showed the largest overall increase in refuge
-use (40\% to 82\%), driven primarily by a sharp rise in the `after'
-period, while the catfish treatment showed a more sustained increase
-across all periods (52\% to 73\%) and the eel treatment the smallest
-increase (35\% to 53\%). Under dark conditions, the pattern shifted,
-with the catfish treatment showing the greatest increase (39\% to 70\%),
-while the eel treatment showed a modest and non-sustained increase (27\%
-to 41\% during `exposure', returning to 36\% `after'), and the control
-remained comparatively low throughout (37\% to 47\%).
+experiment (Figure~\ref{fig-refuge-plot}; {\textbf{?@tbl-refuge-prop}}).
+Under light conditions, the control showed the largest overall increase
+in refuge use (40\% to 82\%), driven primarily by a sharp rise in the
+`after' period, while the catfish treatment showed a more sustained
+increase across all periods (52\% to 73\%) and the eel treatment the
+smallest increase (35\% to 53\%). Under dark conditions, the pattern
+shifted, with the catfish treatment showing the greatest increase (39\%
+to 70\%), while the eel treatment showed a modest and non-sustained
+increase (27\% to 41\% during `exposure', returning to 36\% `after'),
+and the control remained comparatively low throughout (37\% to 47\%).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-refuge-plot.png}
+
+}
+
+\caption{\label{fig-refuge-plot}Kōura refuge use over the course of the
+experiment, showing the proportion of time spent in refuge across three
+periods (before, during, and after predator exposure) for each treatment
+(catfish: dark grey solid line; eel: medium grey dashed line; control:
+light grey dot-dash line) under light (top) and dark (bottom)
+conditions. Black dashed vertical lines indicate the start and end of
+predator exposure and grey vertical lines show individual observation
+times.}
+
+\end{figure}%
 
 \subsubsection{Feeding experiment}\label{feeding-experiment-1}
 
 The linear mixed model showed that starvation period had a significant
 effect on kōura feeding rate (3 days: \emph{p} \textless{} 0.001; 4
-days: \emph{p} = 0.046; Figure~\ref{fig-feeding-plot}; {(Table S2)}).
-Treatment was not included in the main model following model selection.
-Stratified analyses revealed no significant treatment effects across
-starvation periods. Although residuals at day 0 violated normality
-(Shapiro-Wilk \emph{p} = 0.0112), the non-parametric Kruskal-Wallis test
-confirmed no treatment effect (\emph{p} = 0.3165). Starvation days 3 and
-4 met normality assumptions and showed no significant treatment effects
-(\emph{p} = 0.1495 and 0.1573 respectively). After 4 days starvation,
-the mean (±SE) kōura feeding rate (pellets g WW\(^{-1}\)) for the
-control was over two and a half times that of the catfish and eel
-treatments (0.148 ± 0.035 compared to 0.059 ± 0.039 and 0.052 ± 0.039
-respectively).
+days: \emph{p} = 0.046; Figure~\ref{fig-feeding-plot};
+{\textbf{?@tbl-feeding-summary}}). Treatment was not included in the
+main model following model selection. Stratified analyses revealed no
+significant treatment effects across starvation periods. Although
+residuals at day 0 violated normality (Shapiro-Wilk \emph{p} = 0.0112),
+the non-parametric Kruskal-Wallis test confirmed no treatment effect
+(\emph{p} = 0.3165). Starvation days 3 and 4 met normality assumptions
+and showed no significant treatment effects (\emph{p} = 0.1495 and
+0.1573 respectively). After 4 days starvation, the mean (±SE) kōura
+feeding rate (pellets g WW\(^{-1}\)) for the control was over two and a
+half times that of the catfish and eel treatments (0.148 ± 0.035
+compared to 0.059 ± 0.039 and 0.052 ± 0.039 respectively).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=5in,height=\textheight,keepaspectratio]{outputs/fig-feeding-plot.png}
+
+}
+
+\caption{\label{fig-feeding-plot}Mean (±SE) kōura feeding rate (pellets
+consumed per gram wet weight kōura) across predator treatments (catfish,
+eel, control) and starvation periods (0, 3, and 4 days).}
+
+\end{figure}%
 
 \subsection{Discussion}\label{discussion}
 
@@ -957,147 +1099,6 @@ The primary raw dataset is archived on Zenodo
 (https://doi.org/10.5281/zenodo.19716761). Peer review documents,
 including the cover letter and reviewer responses, are available in the
 manuscript repository in the interest of open and transparent science.
-
-\subsection{Tables}\label{tables}
-
-{
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1429}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2571}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1571}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0857}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0571}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0714}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}@{}}
-
-\caption{\label{tbl-emmeans-stratified}Pairwise contrasts for kōura
-refuge use in light and dark conditions. Results are shown separately
-for each light condition from beta-binomial GLMMs. Odds ratios and
-p-values are shown for treatment and period comparisons. P-values are
-Sidak-adjusted for multiple comparisons within each factor.}
-
-\tabularnewline
-
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Condition
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Contrast
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Odds ratio
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-SE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-df
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Null
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-z value
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-p value
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Light & control / catfish & 0.863 & 0.396 & Inf & 1 & -0.322 & 0.944 \\
-Light & control / eel & 1.641 & 0.734 & Inf & 1 & 1.108 & 0.509 \\
-Light & catfish / eel & 1.903 & 0.866 & Inf & 1 & 1.414 & 0.333 \\
-Light & before / during & 0.463 & 0.194 & Inf & 1 & -1.836 & 0.158 \\
-Light & before / after & 0.297 & 0.135 & Inf & 1 & -2.672 & 0.021 \\
-Light & during / after & 0.641 & 0.294 & Inf & 1 & -0.969 & 0.597 \\
-Dark & control / catfish & 0.393 & 0.172 & Inf & 1 & -2.133 & 0.083 \\
-Dark & control / eel & 1.542 & 0.655 & Inf & 1 & 1.019 & 0.565 \\
-Dark & catfish / eel & 3.924 & 1.693 & Inf & 1 & 3.170 & 0.004 \\
-Dark & before / during & 0.728 & 0.286 & Inf & 1 & -0.807 & 0.698 \\
-Dark & before / after & 0.527 & 0.215 & Inf & 1 & -1.569 & 0.259 \\
-Dark & during / after & 0.723 & 0.290 & Inf & 1 & -0.809 & 0.698 \\
-
-\end{longtable}
-
-}
-
-\textsubscript{Source:
-\href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/index.qmd.html}{Article
-Notebook}}
-
-\subsection{Figures}\label{figures}
-
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio]{images/setup_combined.png}}
-
-}
-
-\caption{\label{fig-aquarium-setup}(a) Aquarium layout for kōura refuge
-seeking behaviour experiment. Each experimental round consisted of eight
-aquaria run simultaneously. Each tank contained a single kōura (K) and
-refuge (half terracotta plant pot) on one side of a mesh divider. On the
-other side was either a single catfish (C), eel (E) or a control with no
-fish. The mesh divider allowed visual and chemical cues while preventing
-direct physical contact between tank occupants. (b) Experiments were
-repeated in light and dark (red light), with photographs showing a
-catfish in the light regime (left) and and an eel in the dark regime
-(red light) (right) separated from kōura by mesh dividers.}
-
-\end{figure}%
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-emmeans-stratified.png}
-
-}
-
-\caption{\label{fig-emmeans-stratified}Predicted marginal probabilities
-of refuge use by treatment and experimental period in light and dark
-conditions. Results are shown separately for light (top) and dark
-(bottom) conditions, each fitted with a beta-binomial GLMM. Points
-represent model-estimated marginal means with 95\% confidence intervals
-shown as error bars. Different letters (a, b) indicate statistically
-significant differences based on Tukey-adjusted pairwise comparisons
-within each factor. The dashed line at 0.5 marks the threshold where
-kōura spend half their time in refuge.}
-
-\end{figure}%
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-refuge-plot.png}
-
-}
-
-\caption{\label{fig-refuge-plot}Kōura refuge use over the course of the
-experiment, showing the proportion of time spent in refuge across three
-periods (before, during, and after predator exposure) for each treatment
-(catfish: dark grey solid line; eel: medium grey dashed line; control:
-light grey dot-dash line) under light (top) and dark (bottom)
-conditions. Black dashed vertical lines indicate the start and end of
-predator exposure and grey vertical lines show individual observation
-times.}
-
-\end{figure}%
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=5in,height=\textheight,keepaspectratio]{outputs/fig-feeding-plot.png}
-
-}
-
-\caption{\label{fig-feeding-plot}Mean (±SE) kōura feeding rate (pellets
-consumed per gram wet weight kōura) across predator treatments (catfish,
-eel, control) and starvation periods (0, 3, and 4 days).}
-
-\end{figure}%
 
 \subsection{Supplementary information}\label{supplementary-information}
 
