@@ -856,7 +856,11 @@ get_feed_mean_se <- function(treatment_name) {
 summary_lmm <- summary(lmm_feed)
 feed_summary <- as.data.frame(summary_lmm$coefficients) %>%
   rownames_to_column("term") %>%
-  mutate(across(where(is.numeric), round, 3))
+  mutate(across(where(is.numeric), round, 3),
+         term = recode(term,
+                        "(Intercept)" = "Intercept",
+                        "day_starve3" = "Day 3",
+                        "day_starve4" = "Day 4"))
 
 write.csv(feed_summary, file.path(out_dir, "tbl-feeding-summary.csv"), row.names = FALSE)
 

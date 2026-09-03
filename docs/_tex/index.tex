@@ -159,6 +159,21 @@
 \definecolor{thesiscream}{RGB}{255, 252, 240}
 \definecolor{thesissand}{RGB}{232, 212, 162}
 \pagecolor{thesiscream}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
@@ -235,7 +250,7 @@ predator}
 \author{Olivier V. Raven \and Calum MacNeil \and Finnbar Lee \and Robin
 Holmes \and Ian A. K. Kusabs \and Francis J. Burdon \and Deniz
 Özkundakci}
-\date{2026-08-17}
+\date{2026-09-03}
 \begin{document}
 \maketitle
 
@@ -244,6 +259,8 @@ Holmes \and Ian A. K. Kusabs \and Francis J. Burdon \and Deniz
 \providecommand{\chaptermark}[1]{}
 \ifcsname c@chapter\endcsname
 \setcounter{chapter}{2}
+\setcounter{figure}{0}
+\setcounter{table}{0}
 \setcounter{section}{0}
 \addcontentsline{toc}{chapter}{\protect\numberline{2}Native vs.\ Novel Threats}
 \chaptermark{Native vs.\ Novel Threats}
@@ -518,7 +535,7 @@ three-week period during October 2025.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{images/setup_combined.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/setup_combined.png}
 
 }
 
@@ -669,7 +686,7 @@ kōura OCL and refuge use in any of the three treatments (rs = -0.09,
 
 \centering{
 
-\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-emmeans-stratified.png}
+\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{outputs/fig-emmeans-stratified.png}
 
 }
 
@@ -685,17 +702,9 @@ kōura spend half their time in refuge.}
 
 \end{figure}%
 
-{
+\begingroup\fontsize{9}{11}\selectfont
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1429}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2571}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1571}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0857}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0571}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0714}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1143}}@{}}
+\begin{longtable}[t]{llrrrrrr}
 
 \caption{\label{tbl-emmeans-stratified}Pairwise contrasts for kōura
 refuge use in light and dark conditions. Results are shown separately
@@ -705,44 +714,28 @@ Sidak-adjusted for multiple comparisons within each factor.}
 
 \tabularnewline
 
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Condition
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Contrast
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Odds ratio
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-SE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-df
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Null
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-z value
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-p value
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Light & control / catfish & 0.863 & 0.396 & Inf & 1 & -0.322 & 0.944 \\
-Light & control / eel & 1.641 & 0.734 & Inf & 1 & 1.108 & 0.509 \\
-Light & catfish / eel & 1.903 & 0.866 & Inf & 1 & 1.414 & 0.333 \\
-Light & before / during & 0.463 & 0.194 & Inf & 1 & -1.836 & 0.158 \\
-Light & before / after & 0.297 & 0.135 & Inf & 1 & -2.672 & 0.021 \\
-Light & during / after & 0.641 & 0.294 & Inf & 1 & -0.969 & 0.597 \\
-Dark & control / catfish & 0.393 & 0.172 & Inf & 1 & -2.133 & 0.083 \\
-Dark & control / eel & 1.542 & 0.655 & Inf & 1 & 1.019 & 0.565 \\
-Dark & catfish / eel & 3.924 & 1.693 & Inf & 1 & 3.170 & 0.004 \\
-Dark & before / during & 0.728 & 0.286 & Inf & 1 & -0.807 & 0.698 \\
-Dark & before / after & 0.527 & 0.215 & Inf & 1 & -1.569 & 0.259 \\
-Dark & during / after & 0.723 & 0.290 & Inf & 1 & -0.809 & 0.698 \\
+\toprule
+Condition & Contrast & Odds ratio & SE & df & Null & z value & p value\\
+\midrule
+\cellcolor{gray!8}{Light} & \cellcolor{gray!8}{control / catfish} & \cellcolor{gray!8}{0.863} & \cellcolor{gray!8}{0.396} & \cellcolor{gray!8}{Inf} & \cellcolor{gray!8}{1} & \cellcolor{gray!8}{-0.322} & \cellcolor{gray!8}{0.944}\\
+Light & control / eel & 1.641 & 0.734 & Inf & 1 & 1.108 & 0.509\\
+\cellcolor{gray!8}{Light} & \cellcolor{gray!8}{catfish / eel} & \cellcolor{gray!8}{1.903} & \cellcolor{gray!8}{0.866} & \cellcolor{gray!8}{Inf} & \cellcolor{gray!8}{1} & \cellcolor{gray!8}{1.414} & \cellcolor{gray!8}{0.333}\\
+Light & before / during & 0.463 & 0.194 & Inf & 1 & -1.836 & 0.158\\
+\cellcolor{gray!8}{Light} & \cellcolor{gray!8}{before / after} & \cellcolor{gray!8}{0.297} & \cellcolor{gray!8}{0.135} & \cellcolor{gray!8}{Inf} & \cellcolor{gray!8}{1} & \cellcolor{gray!8}{-2.672} & \cellcolor{gray!8}{0.021}\\
+\addlinespace
+Light & during / after & 0.641 & 0.294 & Inf & 1 & -0.969 & 0.597\\
+\cellcolor{gray!8}{Dark} & \cellcolor{gray!8}{control / catfish} & \cellcolor{gray!8}{0.393} & \cellcolor{gray!8}{0.172} & \cellcolor{gray!8}{Inf} & \cellcolor{gray!8}{1} & \cellcolor{gray!8}{-2.133} & \cellcolor{gray!8}{0.083}\\
+Dark & control / eel & 1.542 & 0.655 & Inf & 1 & 1.019 & 0.565\\
+\cellcolor{gray!8}{Dark} & \cellcolor{gray!8}{catfish / eel} & \cellcolor{gray!8}{3.924} & \cellcolor{gray!8}{1.693} & \cellcolor{gray!8}{Inf} & \cellcolor{gray!8}{1} & \cellcolor{gray!8}{3.170} & \cellcolor{gray!8}{0.004}\\
+Dark & before / during & 0.728 & 0.286 & Inf & 1 & -0.807 & 0.698\\
+\addlinespace
+\cellcolor{gray!8}{Dark} & \cellcolor{gray!8}{before / after} & \cellcolor{gray!8}{0.527} & \cellcolor{gray!8}{0.215} & \cellcolor{gray!8}{Inf} & \cellcolor{gray!8}{1} & \cellcolor{gray!8}{-1.569} & \cellcolor{gray!8}{0.259}\\
+Dark & during / after & 0.723 & 0.290 & Inf & 1 & -0.809 & 0.698\\
+\bottomrule
 
 \end{longtable}
 
-}
+\endgroup{}
 
 \textsubscript{Source:
 \href{https://OlivierRaven.github.io/https---github.com-OlivierRaven-NCE_Koura_catfish/index.qmd.html}{Article
@@ -772,7 +765,7 @@ and the control remained comparatively low throughout (37\% to 47\%).
 
 \centering{
 
-\includegraphics[width=6.5in,height=\textheight,keepaspectratio]{outputs/fig-refuge-plot.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{outputs/fig-refuge-plot.png}
 
 }
 
@@ -808,7 +801,7 @@ compared to 0.059 ± 0.039 and 0.052 ± 0.039 respectively).
 
 \centering{
 
-\includegraphics[width=5in,height=\textheight,keepaspectratio]{outputs/fig-feeding-plot.png}
+\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{outputs/fig-feeding-plot.png}
 
 }
 
@@ -883,7 +876,7 @@ enhancing or restoring habitat complexity in catfish-invaded lakes could
 mitigate both direct predation and fear-driven reductions in foraging,
 though direct field testing is needed.
 
-Before fish were added to the tanks, refuge use by koūra was similar
+Before fish were added to the tanks, refuge use by kōura was similar
 across treatments but highly variable at the individual level,
 reflecting substantial behavioural variation. The control treatment
 showed increasing refuge use over time, particularly under light

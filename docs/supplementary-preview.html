@@ -168,46 +168,7 @@
 <link href="site_libs/bootstrap/bootstrap-8fd0a66505689c34dc5b7c06239434da.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-65a9ced8f92a8dd03898fd51d5651c73.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-8fd0a66505689c34dc5b7c06239434da.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-     <style>html{ scroll-behavior: smooth; }</style>  <link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
-
-<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-
-<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-
-<script src="site_libs/datatables-binding-0.34.0/datatables.js"></script>
-
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-
-<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-
-<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-
-<script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-
-<script src="site_libs/jszip-1.13.6/jszip.min.js"></script>
-
-<link href="site_libs/dt-ext-buttons-1.13.6/css/buttons.dataTables.min.css" rel="stylesheet">
-
-<script src="site_libs/dt-ext-buttons-1.13.6/js/dataTables.buttons.min.js"></script>
-
-<script src="site_libs/dt-ext-buttons-1.13.6/js/buttons.html5.min.js"></script>
-
-<script src="site_libs/dt-ext-buttons-1.13.6/js/buttons.colVis.min.js"></script>
-
-<script src="site_libs/dt-ext-buttons-1.13.6/js/buttons.print.min.js"></script>
-
-<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
-
-<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
-
-<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
-
-<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
-
-<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
-
-<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
-  <style>#title-block-header .abstract { display: none; }</style>  
+     <style>html{ scroll-behavior: smooth; }</style>  <style>#title-block-header .abstract { display: none; }</style>  
       </head>
 
   <body class="quarto-notebook quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -406,14 +367,21 @@
 <summary>View Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>refuge_tbl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(.ch2_out, <span class="st">"tbl-refuge-prop.csv"</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>col_nms    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Light"</span>, <span class="st">"Treatment"</span>, <span class="st">"Period"</span>, <span class="st">"N total"</span>, <span class="st">"N refuge"</span>, <span class="st">"Proportion in refuge"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">"thesis.is.html"</span>))) {</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(refuge_tbl, <span class="at">colnames =</span> col_nms, <span class="at">filter =</span> <span class="st">"top"</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">15</span>, <span class="at">dom =</span> <span class="st">'Bfrtip'</span>, <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">'csv'</span>, <span class="st">'excel'</span>)),</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">extensions =</span> <span class="st">'Buttons'</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">formatRound</span>(<span class="at">columns =</span> <span class="st">"prop_refuge"</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(refuge_tbl, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">col.names =</span> col_nms)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_latex_output</span>()) {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(refuge_tbl, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">col.names =</span> col_nms, <span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hold_position"</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">font_size =</span> <span class="dv">9</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">stripe_color =</span> <span class="st">"gray!8"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(refuge_tbl, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">col.names =</span> col_nms)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="tbl-refuge-prop" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -422,8 +390,324 @@ Proportion of kōura observations recorded in refuge across experimental treatme
 </figcaption>
 <div aria-describedby="tbl-refuge-prop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-7c3b67745d90b6416f22" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-7c3b67745d90b6416f22">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"60\" data-max=\"1344\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"18\" data-max=\"671\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.27\" data-max=\"0.82\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["light","light","light","light","light","light","light","light","light","dark","dark","dark","dark","dark","dark","dark","dark","dark","combined","combined","combined","combined","combined","combined","combined","combined","combined","light","light","light","dark","dark","dark","combined","combined","combined","combined"],["catfish","catfish","catfish","eel","eel","eel","control","control","control","catfish","catfish","catfish","eel","eel","eel","control","control","control","catfish","catfish","catfish","control","control","control","eel","eel","eel","combined","combined","combined","combined","combined","combined","combined","combined","combined","combined"],["before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","before","during","after","combined"],[66,99,66,66,99,66,60,90,60,66,99,66,66,99,66,60,90,60,132,198,132,120,180,120,132,198,132,192,288,192,192,288,192,384,576,384,1344],[34,71,48,23,49,35,24,48,49,26,47,46,18,41,24,22,38,28,60,118,94,46,86,77,41,90,59,81,168,132,66,126,98,147,294,230,671],[0.52,0.72,0.73,0.35,0.49,0.53,0.4,0.53,0.82,0.39,0.47,0.7,0.27,0.41,0.36,0.37,0.42,0.47,0.45,0.6,0.71,0.38,0.48,0.64,0.31,0.45,0.45,0.42,0.58,0.6899999999999999,0.34,0.44,0.51,0.38,0.51,0.6,0.5]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Light<\/th>\n      <th>Treatment<\/th>\n      <th>Period<\/th>\n      <th>N total<\/th>\n      <th>N refuge<\/th>\n      <th>Proportion in refuge<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":15,"dom":"Bfrtip","buttons":["csv","excel"],"columnDefs":[{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[3,4,5]},{"name":"light","targets":0},{"name":"treatment","targets":1},{"name":"period","targets":2},{"name":"n_total","targets":3},{"name":"n_refuge","targets":4},{"name":"prop_refuge","targets":5}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,15,25,50,100]}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Light</th>
+<th style="text-align: left;">Treatment</th>
+<th style="text-align: left;">Period</th>
+<th style="text-align: right;">N total</th>
+<th style="text-align: right;">N refuge</th>
+<th style="text-align: right;">Proportion in refuge</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">0.52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">0.49</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.53</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.53</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">0.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">0.47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0.36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0.37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">0.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">catfish</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">0.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.64</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0.31</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">eel</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">0.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">0.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">light</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">0.69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">0.44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dark</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">0.51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">before</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">147</td>
+<td style="text-align: right;">0.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">during</td>
+<td style="text-align: right;">576</td>
+<td style="text-align: right;">294</td>
+<td style="text-align: right;">0.51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">after</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">0.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: left;">combined</td>
+<td style="text-align: right;">1344</td>
+<td style="text-align: right;">671</td>
+<td style="text-align: right;">0.50</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </figure>
@@ -434,14 +718,21 @@ Proportion of kōura observations recorded in refuge across experimental treatme
 <summary>View Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>feed_tbl  <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(.ch2_out, <span class="st">"tbl-feeding-summary.csv"</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>col_nms_f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Term"</span>, <span class="st">"Estimate"</span>, <span class="st">"Std. Error"</span>, <span class="st">"df"</span>, <span class="st">"t value"</span>, <span class="st">"p value"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">"thesis.is.html"</span>))) {</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(feed_tbl, <span class="at">colnames =</span> col_nms_f, <span class="at">filter =</span> <span class="st">"top"</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">15</span>, <span class="at">dom =</span> <span class="st">'Bfrtip'</span>, <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">'csv'</span>, <span class="st">'excel'</span>)),</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">extensions =</span> <span class="st">'Buttons'</span>) <span class="sc">|&gt;</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">formatRound</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"Std..Error"</span>, <span class="st">"t.value"</span>, <span class="st">"Pr...t.."</span>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(feed_tbl, <span class="at">col.names =</span> col_nms_f, <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_latex_output</span>()) {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(feed_tbl, <span class="at">col.names =</span> col_nms_f, <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hold_position"</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">font_size =</span> <span class="dv">9</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">stripe_color =</span> <span class="st">"gray!8"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(feed_tbl, <span class="at">col.names =</span> col_nms_f, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="tbl-feeding-summary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -450,8 +741,44 @@ Fixed effects from the linear mixed model of kōura feeding rate (pellets consum
 </figcaption>
 <div aria-describedby="tbl-feeding-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-1b0c4214491c330fb55d" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1b0c4214491c330fb55d">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.023\" data-max=\"0.132\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.024\" data-max=\"0.033\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.951\" data-max=\"4.034\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"0.347\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["(Intercept)","day_starve3","day_starve4"],[0.023,0.132,0.067],[0.024,0.033,0.033],[43,43,43],[0.951,4.033,2.056],[0.347,0,0.046]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Term<\/th>\n      <th>Estimate<\/th>\n      <th>Std. Error<\/th>\n      <th>df<\/th>\n      <th>t value<\/th>\n      <th>p value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":15,"dom":"Bfrtip","buttons":["csv","excel"],"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3,4,5]},{"name":"term","targets":0},{"name":"Estimate","targets":1},{"name":"Std..Error","targets":2},{"name":"df","targets":3},{"name":"t.value","targets":4},{"name":"Pr...t..","targets":5}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,15,25,50,100]}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render"],"jsHooks":[]}</script>
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">t value</th>
+<th style="text-align: right;">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">0.951</td>
+<td style="text-align: right;">0.347</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Day 3</td>
+<td style="text-align: right;">0.132</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">4.033</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Day 4</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">2.056</td>
+<td style="text-align: right;">0.046</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </figure>
@@ -939,31 +1266,45 @@ Fixed effects from the linear mixed model of kōura feeding rate (pellets consum
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>refuge_tbl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(.ch2_out, <span class="st">"tbl-refuge-prop.csv"</span>))</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>col_nms    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Light"</span>, <span class="st">"Treatment"</span>, <span class="st">"Period"</span>, <span class="st">"N total"</span>, <span class="st">"N refuge"</span>, <span class="st">"Proportion in refuge"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">"thesis.is.html"</span>))) {</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(refuge_tbl, <span class="at">colnames =</span> col_nms, <span class="at">filter =</span> <span class="st">"top"</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">15</span>, <span class="at">dom =</span> <span class="st">'Bfrtip'</span>, <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">'csv'</span>, <span class="st">'excel'</span>)),</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">extensions =</span> <span class="st">'Buttons'</span>) <span class="sc">|&gt;</span></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">formatRound</span>(<span class="at">columns =</span> <span class="st">"prop_refuge"</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(refuge_tbl, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">col.names =</span> col_nms)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-feeding-summary</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Fixed effects from the linear mixed model of kōura feeding rate (pellets consumed per gram body weight). Starvation period included as fixed effect with tank as random intercept."</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>feed_tbl  <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(.ch2_out, <span class="st">"tbl-feeding-summary.csv"</span>))</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>col_nms_f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Term"</span>, <span class="st">"Estimate"</span>, <span class="st">"Std. Error"</span>, <span class="st">"df"</span>, <span class="st">"t value"</span>, <span class="st">"p value"</span>)</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(feed_tbl, <span class="at">colnames =</span> col_nms_f, <span class="at">filter =</span> <span class="st">"top"</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">15</span>, <span class="at">dom =</span> <span class="st">'Bfrtip'</span>, <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">'csv'</span>, <span class="st">'excel'</span>)),</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>                <span class="at">extensions =</span> <span class="st">'Buttons'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">formatRound</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"Std..Error"</span>, <span class="st">"t.value"</span>, <span class="st">"Pr...t.."</span>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(feed_tbl, <span class="at">col.names =</span> col_nms_f, <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_latex_output</span>()) {</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(refuge_tbl, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">col.names =</span> col_nms, <span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hold_position"</span>),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">font_size =</span> <span class="dv">9</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">stripe_color =</span> <span class="st">"gray!8"</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(refuge_tbl, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">col.names =</span> col_nms)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-feeding-summary</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Fixed effects from the linear mixed model of kōura feeding rate (pellets consumed per gram body weight). Starvation period included as fixed effect with tank as random intercept."</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>feed_tbl  <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(.ch2_out, <span class="st">"tbl-feeding-summary.csv"</span>))</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>col_nms_f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Term"</span>, <span class="st">"Estimate"</span>, <span class="st">"Std. Error"</span>, <span class="st">"df"</span>, <span class="st">"t value"</span>, <span class="st">"p value"</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">"thesis.is.html"</span>))) {</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(feed_tbl, <span class="at">colnames =</span> col_nms_f, <span class="at">filter =</span> <span class="st">"top"</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>                <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">15</span>, <span class="at">dom =</span> <span class="st">'Bfrtip'</span>, <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">'csv'</span>, <span class="st">'excel'</span>)),</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>                <span class="at">extensions =</span> <span class="st">'Buttons'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">formatRound</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"Std..Error"</span>, <span class="st">"t.value"</span>, <span class="st">"Pr...t.."</span>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_latex_output</span>()) {</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(feed_tbl, <span class="at">col.names =</span> col_nms_f, <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hold_position"</span>),</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">font_size =</span> <span class="dv">9</span>,</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>      <span class="at">stripe_color =</span> <span class="st">"gray!8"</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(feed_tbl, <span class="at">col.names =</span> col_nms_f, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>  </div> <!-- /content --> 
   
