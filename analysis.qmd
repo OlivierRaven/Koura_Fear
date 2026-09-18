@@ -335,6 +335,10 @@ m_light_effect <- glmmTMB(cbind(n_refuge, n_total - n_refuge) ~ treatment + ligh
 
 summary(m_light_effect)
 
+m_light_effect2 <- glmmTMB(cbind(n_refuge, n_total - n_refuge) ~ treatment * light + period + (1|tank), data = round_summary, family = betabinomial)
+
+summary(m_light_effect2)
+
 ```
 
 ## Fixed effects - Light and Dark
