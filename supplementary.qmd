@@ -11,7 +11,7 @@
 #| echo: false
 #| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."
 refuge_tbl <- read.csv(file.path(.ch2_out, "tbl-refuge-prop.csv"))
-col_nms    <- c("Light", "Treatment", "Period", "N total", "N refuge", "Proportion in refuge")
+col_nms    <- c("Light", "Treatment", "Period", "n total", "n refuge", "Proportion in refuge")
 if (isTRUE(getOption("thesis.is.html")) && knitr::is_html_output()) {
   DT::datatable(refuge_tbl, colnames = col_nms, filter = "top", rownames = FALSE,
                 options = list(pageLength = 15, dom = 'Bfrtip', buttons = c('csv', 'excel')),

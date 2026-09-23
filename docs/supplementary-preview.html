@@ -366,7 +366,7 @@
 <details class="code-fold">
 <summary>View Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>refuge_tbl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(.ch2_out, <span class="st">"tbl-refuge-prop.csv"</span>))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>col_nms    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Light"</span>, <span class="st">"Treatment"</span>, <span class="st">"Period"</span>, <span class="st">"N total"</span>, <span class="st">"N refuge"</span>, <span class="st">"Proportion in refuge"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>col_nms    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Light"</span>, <span class="st">"Treatment"</span>, <span class="st">"Period"</span>, <span class="st">"n total"</span>, <span class="st">"n refuge"</span>, <span class="st">"Proportion in refuge"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">"thesis.is.html"</span>)) <span class="sc">&amp;&amp;</span> knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(refuge_tbl, <span class="at">colnames =</span> col_nms, <span class="at">filter =</span> <span class="st">"top"</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">15</span>, <span class="at">dom =</span> <span class="st">'Bfrtip'</span>, <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">'csv'</span>, <span class="st">'excel'</span>)),</span>
@@ -404,8 +404,8 @@ Proportion of kōura observations recorded in refuge across experimental treatme
 <th style="text-align: left;">Light</th>
 <th style="text-align: left;">Treatment</th>
 <th style="text-align: left;">Period</th>
-<th style="text-align: right;">N total</th>
-<th style="text-align: right;">N refuge</th>
+<th style="text-align: right;">n total</th>
+<th style="text-align: right;">n refuge</th>
 <th style="text-align: right;">Proportion in refuge</th>
 </tr>
 </thead>
@@ -1265,7 +1265,7 @@ Fixed effects from the linear mixed model of kōura feeding rate (pellets consum
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Proportion of kōura observations recorded in refuge across experimental treatments (catfish, eel, control), light conditions (light, dark), and periods (before, during, and after predator exposure). Combined rows summarise across all levels of a given factor. Values represent the proportion of total observations where kōura were located in the refuge."</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>refuge_tbl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(.ch2_out, <span class="st">"tbl-refuge-prop.csv"</span>))</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>col_nms    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Light"</span>, <span class="st">"Treatment"</span>, <span class="st">"Period"</span>, <span class="st">"N total"</span>, <span class="st">"N refuge"</span>, <span class="st">"Proportion in refuge"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>col_nms    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Light"</span>, <span class="st">"Treatment"</span>, <span class="st">"Period"</span>, <span class="st">"n total"</span>, <span class="st">"n refuge"</span>, <span class="st">"Proportion in refuge"</span>)</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">"thesis.is.html"</span>)) <span class="sc">&amp;&amp;</span> knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(refuge_tbl, <span class="at">colnames =</span> col_nms, <span class="at">filter =</span> <span class="st">"top"</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">15</span>, <span class="at">dom =</span> <span class="st">'Bfrtip'</span>, <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">'csv'</span>, <span class="st">'excel'</span>)),</span>

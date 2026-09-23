@@ -729,7 +729,7 @@ feeding_plot <- ggplot(df_feeding, aes(x = factor(day_starve),  y = pellets_per_
   stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25, linewidth = 0.5,  position = position_dodge(0.9)) +
   scale_fill_manual(values = c("catfish" = "gray20",  "eel"  = "grey40",  "control" = "grey60"),
                    labels = c("catfish" = "Catfish", "eel" = "Eel", "control" = "Control")) +
-  labs(x = "Starvation period (days)",  y = "Feeding rate (pellets consumed g WW⁻¹)",  fill = "Treatment") +
+  labs(x = "Starvation period (days)",  y = "Feeding rate (pellets consumed g/WW)",  fill = "Treatment") +
   theme(legend.position = "right")
 
 ggsave(file.path(out_dir, "fig-feeding-plot.png"), feeding_plot, width = 5, height = 4, dpi = 300)
